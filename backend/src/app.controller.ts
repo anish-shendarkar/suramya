@@ -1,17 +1,15 @@
 import { AuthService } from './auth/auth.service';
 import { Controller, Get, Post, UseGuards, Request, Param } from '@nestjs/common';
 import { AppService } from './app.service';
-import { UserService } from './user/user.service';
 import { AdminService } from './admin/admin.service';
 import { AuthGuard } from '@nestjs/passport';
 
-@Controller()
+@Controller('api')
 export class AppController {
   constructor(
     private readonly appService: AppService,
     private readonly authService: AuthService,
     private readonly adminService: AdminService,
-    private readonly userService: UserService,
   ) {}
 
   @Get()
@@ -29,7 +27,7 @@ export class AppController {
     // }
 
     console.log('appsignup', req.body);
-    const user = await this.userService.createUser(
+    const user = await this.adminService.createUser(
       req.body.name,
       req.body.email,
       req.body.password,
