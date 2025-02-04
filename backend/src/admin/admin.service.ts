@@ -4,12 +4,14 @@ import { Model } from 'mongoose';
 import * as bcrypt from 'bcryptjs';
 import { User } from 'src/schemas/user.schema'
 import { Outfit } from 'src/schemas/outfit.schema';
+import { Jewellery } from 'src/schemas/jewellery.schema';
 
 @Injectable()
 export class AdminService {
   constructor(
     @InjectModel(User.name) private readonly userModel: Model<User>,
     @InjectModel(Outfit.name) private readonly outfitModel: Model<Outfit>,
+    @InjectModel(Jewellery.name) private readonly jewelleryModel: Model<Jewellery>,
   ) {}
 
   async createUser(name: string, email: string, password: string, role: string) {
@@ -59,5 +61,19 @@ export class AdminService {
 
   async getOutfitById(outfitId: string) {
     return await this.outfitModel.findById(outfitId).exec();
+  }
+
+  async createJewelleryItem(user: User, body, coverImage: string, images: string[]) {
+    const jewelleryItem = new this.jewelleryModel({
+      name: body.name,
+      description: body.description,
+      type: body.type,
+      color: body.color,
+      coverImage,
+      images,
+    });
+
+    await jewelleryItem.save();
+    return jewelleryItem;
   }
 }

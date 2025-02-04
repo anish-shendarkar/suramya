@@ -6,23 +6,23 @@ import { Card, CardContent } from "@/components/ui/card"
 
 export default function Home() {
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen font-[Joan]">
       {/* Header */}
-      <header className="px-4 lg:px-6 h-16 flex items-center border-b">
+      <header className="px-4 lg:px-6 h-16 flex items-center border-b text-white" style={{ backgroundColor:"#A58A6F" }} >
         <Link className="flex items-center justify-center" href="/">
-          <span className="font-semibold text-lg">Rental Elegance</span>
+          <span className="font-semibold text-xl">Suramya</span>
         </Link>
         <nav className="ml-auto flex gap-4 sm:gap-6">
-          <Link className="text-sm font-medium hover:underline underline-offset-4" href="#">
+          <Link className="text-md font-medium hover:underline underline-offset-4" href="#">
             Sarees
           </Link>
-          <Link className="text-sm font-medium hover:underline underline-offset-4" href="#">
+          <Link className="text-md font-medium hover:underline underline-offset-4" href="#">
             Dresses
           </Link>
-          <Link className="text-sm font-medium hover:underline underline-offset-4" href="#">
+          <Link className="text-md font-medium hover:underline underline-offset-4" href="#">
             Jewelry
           </Link>
-          <Link className="text-sm font-medium hover:underline underline-offset-4" href="#">
+          <Link className="text-md font-medium hover:underline underline-offset-4" href="#">
             How It Works
           </Link>
         </nav>
@@ -30,14 +30,14 @@ export default function Home() {
 
       <main className="flex-1">
         {/* Hero Section */}
-        <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48 bg-black">
+        <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48">
           <div className="container px-4 md:px-6">
-            <div className="flex flex-col items-center space-y-4 text-center text-white">
+            <div className="flex flex-col items-center space-y-4 text-center">
               <div className="space-y-2">
                 <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none">
                   Rent Designer Wear for Your Special Moments
                 </h1>
-                <p className="mx-auto max-w-[700px] text-gray-200 md:text-xl">
+                <p className="mx-auto max-w-[700px] text-gray-500 md:text-xl">
                   Premium collection of traditional and contemporary wear. Rent authentic designer pieces at a fraction
                   of the cost.
                 </p>
@@ -46,7 +46,7 @@ export default function Home() {
                 <Button className="bg-white text-black hover:bg-gray-200" size="lg">
                   Browse Collection
                 </Button>
-                <Button variant="outline" className="border-white text-white hover:bg-white hover:text-black" size="lg">
+                <Button className="border-white text-white hover:bg-white hover:text-black" size="lg">
                   How It Works
                 </Button>
               </div>
@@ -259,7 +259,7 @@ export default function Home() {
             </div>
           </div>
           <div className="mt-8 pt-8 border-t text-center text-sm text-gray-500">
-            © {new Date().getFullYear()} Rental Elegance. All rights reserved.
+            © {new Date().getFullYear()} Suramya Bespoke. All rights reserved.
           </div>
         </div>
       </footer>
@@ -277,7 +277,7 @@ const categories = [
     image: "/placeholder.svg?height=400&width=300",
   },
   {
-    name: "Jewelry",
+    name: "Jewellery",
     image: "/placeholder.svg?height=400&width=300",
   },
   {
@@ -299,7 +299,7 @@ const steps = [
   },
   {
     title: "Return With Ease",
-    description: "Return the outfit in the provided packaging. We handle the cleaning.",
+    description: "Return the outfit in the provided packaging.",
     icon: RefreshCw,
   },
 ]
