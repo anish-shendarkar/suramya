@@ -4,6 +4,7 @@ import {
   Post,
   Body,
   Patch,
+  Put,
   Param,
   Delete,
   UseGuards,
@@ -60,6 +61,10 @@ export class AdminController {
     );
   }
 
+  async deleteOutfit(@Param('outfitId') outfitId, @Request() req) {
+    return this.adminService.deleteOutfit(req.user.user, outfitId);
+  }
+
   @Get('getoutfits')
   async getAllOutfits() {
     return this.adminService.getAllOutfits();
@@ -75,7 +80,7 @@ export class AdminController {
     FilesInterceptor('images', 10, {
       storage: diskStorage({
         destination: (req, file, cb) => {
-          const uploadPath = 'uploads/outfits';
+          const uploadPath = 'uploads/jewellery';
           if (!fs.existsSync(uploadPath)) {
             fs.mkdirSync(uploadPath, { recursive: true });
           }
@@ -98,5 +103,11 @@ export class AdminController {
       coverImage,
       imagePaths,
     );
+  }
+
+  @Delete('deletejewelleryitem/:jewelleryId')
+  async deleteJewelleryItem(@Param('jewelleryId') jewelleryId, @Request() req) {
+    console.log('req.user', req.user);
+    return this.adminService.deleteJewelleryItem(req.user.user,jewelleryId);
   }
 }

@@ -21,7 +21,6 @@ export class User {
 
     @Prop({
         required: true,
-        default: 'user',
     })
     role: string;
 

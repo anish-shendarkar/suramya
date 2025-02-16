@@ -26,7 +26,7 @@ export class AdminService {
     const newUser = new this.userModel({
       name,
       email,
-      hashedPassword,
+      password: hashedPassword,
       role,
     });
 
@@ -55,6 +55,15 @@ export class AdminService {
     return outfit;
   }
 
+  async deleteOutfit(user: User, outfitId: string) {
+    const outfit = await this.outfitModel.findById(outfitId);
+    if (!outfit) {
+      throw new BadRequestException('Outfit not found');
+    }
+
+    await outfit.deleteOne();
+  }
+
   async getAllOutfits() {
     return await this.outfitModel.find({}, 'name coverImage').exec();
   }
@@ -75,5 +84,26 @@ export class AdminService {
 
     await jewelleryItem.save();
     return jewelleryItem;
+  }
+
+  async getJewelleryItemById(jewelleryId: string) {
+    const jewelleryItem = await this.jewelleryModel.findById(jewelleryId);
+    return jewelleryItem;
+  }
+
+  async getAllJewelleryItems() {
+    const jewelleryItems = await this.jewelleryModel.find({}, 'name coverImage').exec();
+    return jewelleryItems;
+  }
+
+  async deleteJewelleryItem(user: User, jewelleryId: string) {
+    const jewelleryItem = await this.jewelleryModel.findById(jewelleryId);
+    if (!jewelleryItem) {
+      throw new BadRequestException('Jewellery item not found');
+    }
+
+    await jewelleryItem.deleteOne();
+
+    return {message: 'Jewellery item deleted successfully'};
   }
 }
