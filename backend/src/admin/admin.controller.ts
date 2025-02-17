@@ -19,9 +19,10 @@ import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import * as fs from 'fs';
 import * as path from 'path';
+import { RoleGuard } from 'src/role.guard';
 
 @Controller('admin')
-@UseGuards(AuthGuard('jwt'))
+@UseGuards(AuthGuard('jwt'), new RoleGuard('admin'))
 export class AdminController {
   constructor(private readonly adminService: AdminService) { }
 

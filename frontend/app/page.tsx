@@ -8,7 +8,7 @@ export default function Home() {
   return (
     <div className="flex flex-col min-h-screen font-[Joan]">
       {/* Header */}
-      <header className="px-4 lg:px-6 h-16 flex items-center border-b text-white" style={{ backgroundColor:"#A58A6F" }} >
+      {/* <header className="px-4 lg:px-6 h-16 flex items-center border-b text-white" style={{ backgroundColor:"#A58A6F" }} >
         <Link className="flex items-center justify-center" href="/">
           <span className="font-semibold text-xl">Suramya</span>
         </Link>
@@ -26,7 +26,7 @@ export default function Home() {
             How It Works
           </Link>
         </nav>
-      </header>
+      </header> */}
 
       <main className="flex-1">
         {/* Hero Section */}
