@@ -18,7 +18,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { RoleGuard } from 'src/role.guard';
 
 @Controller('user')
-@UseGuards(AuthGuard('jwt'), new RoleGuard('user'))
+@UseGuards(AuthGuard('jwt'))
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
@@ -60,5 +60,21 @@ export class UserController {
   @Get('jewellery/:jewelleryId')
   async getJewelleryById(@Param('jewelleryId') jewelleryId: string) {
     return this.userService.getJewelleryById(jewelleryId);
+  }
+
+  @Get('alljewellery')
+  async getAllJewellery() {
+    return this.userService.getAllJewelleryItems();
+  }
+
+  @Post('createappointment/:itemType/:itemId')
+  async createAppointment(
+    @Request() req,
+    @Body() body,
+    @Param('itemType') itemType: 'outfit' | 'jewellery',
+    @Param('itemId') itemId: string
+  ) { 
+    console.log('req.user', req.user.id);
+    return this.userService.bookAppointment(itemType, itemId, req.user.id, body);
   }
 }
