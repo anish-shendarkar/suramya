@@ -111,14 +111,4 @@ export class AdminController {
     console.log('req.user', req.user);
     return this.adminService.deleteJewelleryItem(req.user.user,jewelleryId);
   }
-
-  @Get('getappointment/:appointmentId')
-  async getAppointmentById(@Param('appointmentId') appointmentId, @Request() req) {
-    return this.adminService.getAppointmentById(appointmentId);
-  }
-
-  @Get('getappointments')
-  async getAppointments(@Request() req) {
-    return this.adminService.getAllAppointments();
-  }
 }

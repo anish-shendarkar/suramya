@@ -36,6 +36,16 @@ export class Outfit {
     @Prop({
         required: true,
     })
+    price: number;
+
+    @Prop({
+        required: true,
+    })
+    deposit: number;
+
+    @Prop({
+        required: true,
+    })
     coverImage: string;
 
     @Prop({ type: [String], required: true })

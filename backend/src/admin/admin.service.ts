@@ -5,7 +5,6 @@ import * as bcrypt from 'bcryptjs';
 import { User } from 'src/schemas/user.schema'
 import { Outfit } from 'src/schemas/outfit.schema';
 import { Jewellery } from 'src/schemas/jewellery.schema';
-import { Appointment } from 'src/schemas/appointment.schema';
 
 @Injectable()
 export class AdminService {
@@ -13,7 +12,6 @@ export class AdminService {
     @InjectModel(User.name) private readonly userModel: Model<User>,
     @InjectModel(Outfit.name) private readonly outfitModel: Model<Outfit>,
     @InjectModel(Jewellery.name) private readonly jewelleryModel: Model<Jewellery>,
-    @InjectModel(Appointment.name) private readonly appointmentModel: Model<Appointment>,
   ) {}
 
   async createUser(name: string, email: string, password: string, role: string) {
@@ -49,6 +47,8 @@ export class AdminService {
       size: body.size,
       color: body.color,
       gender: body.gender,
+      price: body.price,
+      deposit: body.deposit,
       coverImage,
       images,
     });
@@ -107,23 +107,5 @@ export class AdminService {
     await jewelleryItem.deleteOne();
 
     return {message: 'Jewellery item deleted successfully'};
-  }
-
-  async getAppointmentById(appointmentId: string) {
-    const appointment = await this.appointmentModel.findById(appointmentId);
-    if(!appointment) {
-      throw new BadRequestException('Appointment not found');
-    }
-
-    return appointment;
-  }
-
-  async getAllAppointments() {
-    const appointments = await this.appointmentModel.find().populate('outfitId'); //populate UserId
-    if(!appointments) {
-      throw new BadRequestException('Appointments not found');
-    }
-
-    return appointments;
   }
 }

@@ -29,6 +29,7 @@
     "@nestjs/passport": "^11.0.4",
     "@nestjs/platform-express": "^10.4.15",
     "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "fs": "^0.0.1-security",
     "mongoose": "^8.9.5",

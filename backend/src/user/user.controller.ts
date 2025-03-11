@@ -18,7 +18,6 @@ import { AuthGuard } from '@nestjs/passport';
 import { RoleGuard } from 'src/role.guard';
 
 @Controller('user')
-@UseGuards(AuthGuard('jwt'))
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
@@ -42,19 +41,9 @@ export class UserController {
     return this.userService.getOutfitByGenderFemale();
   }
 
-  @Get('outfits/bridal')
-  async getOutfitByTypeBridal() {
-    return this.userService.getOutfitByTypeBridal();
-  }
-
-  @Get('outfits/traditional')
-  async getOutfitByTypeTraditional() {
-    return this.userService.getOutfitByTypeTraditional();
-  }
-
-  @Get('outfits/party')
-  async getOutfitByTypeParty() {
-    return this.userService.getOutfitByTypeParty();
+  @Get('outfits/:category')
+  async getOutfitBycategory(@Param('category') category: string) {
+    return this.userService.getOutfitBycategory(category);
   }
 
   @Get('jewellery/:jewelleryId')
@@ -65,16 +54,5 @@ export class UserController {
   @Get('alljewellery')
   async getAllJewellery() {
     return this.userService.getAllJewelleryItems();
-  }
-
-  @Post('createappointment/:itemType/:itemId')
-  async createAppointment(
-    @Request() req,
-    @Body() body,
-    @Param('itemType') itemType: 'outfit' | 'jewellery',
-    @Param('itemId') itemId: string
-  ) { 
-    console.log('req.user', req.user.id);
-    return this.userService.bookAppointment(itemType, itemId, req.user.id, body);
   }
 }
