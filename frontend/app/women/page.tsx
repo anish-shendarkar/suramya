@@ -14,7 +14,7 @@ export default function CategoryPage() {
     useEffect(() => {
         const fetchOutfits = async() => {
             try {
-                const response = await fetch(`http://localhost:3333/user/outfits/${category}`, {
+                const response = await fetch(`http://localhost:3333/user/outfits/female`, {
                     method: "GET",
                 });
                 if(!response.ok) {
@@ -34,9 +34,9 @@ export default function CategoryPage() {
     const handleOnClick = (id:string) => {
         router.push(`/outfit/${id}`);
     }
-
     return (
-        <div className="container mt-16 mx-auto p-6">
+        
+        <div className="container mx-auto p-6">
             <h1 className="text-3xl font-bold mb-6 capitalize">{category} Collection</h1>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {outfits.length > 0 ? (

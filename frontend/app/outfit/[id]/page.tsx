@@ -54,9 +54,8 @@ export default function OutfitViewer() {
     }, [id]);
 
     if (!outfit) return <p className="text-center mt-10">Loading outfit details...</p>;
-    const imageUrl = outfit?.images?.[0]
-        ? `http://localhost:3333/uploads/${outfit.images[0]}`
-        : "/placeholder.jpg";
+    // URL of images
+    const imageUrl = outfit?.images?.[0] || "/placeholder.svg";
     return (
         <div className="container mx-auto px-4 py-6 mt-20">
             <div className="grid lg:grid-cols-2 gap-8 items-start">
@@ -152,7 +151,6 @@ export default function OutfitViewer() {
                         </Button>
 
                         <div className="text-sm text-muted-foreground">
-                            <p>* Appointment required for trial and rental</p>
                             <p>* Minimum rental period: 1 day</p>
                         </div>
                     </div>

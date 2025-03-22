@@ -5,7 +5,7 @@ import { Card, CardContent } from "@/components/ui/card"
 
 export default function ContactPage() {
   return (
-    <div className="container mx-auto py-12 px-4 max-w-6xl mt-10">
+    <div className="container mx-auto py-12 px-4 max-w-6xl">
       <div className="text-center mb-12">
         <h1 className="text-4xl font-bold tracking-tight mb-2">Contact Us</h1>
         <p className="text-muted-foreground max-w-2xl mx-auto">
