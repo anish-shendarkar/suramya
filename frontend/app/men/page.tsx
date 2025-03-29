@@ -41,7 +41,7 @@ export default function CategoryPage() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {outfits.length > 0 ? (
                     outfits.map((outfit) => (
-                        <div onClick={() => handleOnClick(outfit._id)} key={outfit?._id} className="border rounded-lg p-4 hover:shadow-md transition-shadow cursor-pointer">
+                        <div onClick={() => handleOnClick(outfit._id)} key={outfit?._id} className="rounded-lg p-4 shadow-md border-2 border-transparent transition-all duration-300 hover:border-rose-300 hover:shadow-purple-400 cursor-pointer">
                             
                             <Image
                                 src={ "/placeholder.svg"}

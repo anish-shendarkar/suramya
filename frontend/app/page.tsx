@@ -9,27 +9,6 @@ import { Card, CardContent } from "@/components/ui/card"
 export default function Home() {
   return (
     <div className="flex flex-col min-h-screen font-[Joan]">
-      {/* Header */}
-      {/* <header className="px-4 lg:px-6 h-16 flex items-center border-b text-white" style={{ backgroundColor:"#A58A6F" }} >
-        <Link className="flex items-center justify-center" href="/">
-          <span className="font-semibold text-xl">Suramya</span>
-        </Link>
-        <nav className="ml-auto flex gap-4 sm:gap-6">
-          <Link className="text-md font-medium hover:underline underline-offset-4" href="#">
-            Sarees
-          </Link>
-          <Link className="text-md font-medium hover:underline underline-offset-4" href="#">
-            Dresses
-          </Link>
-          <Link className="text-md font-medium hover:underline underline-offset-4" href="#">
-            Jewelry
-          </Link>
-          <Link className="text-md font-medium hover:underline underline-offset-4" href="#">
-            How It Works
-          </Link>
-        </nav>
-      </header> */}
-
       <main className="flex-1">
         {/* Hero Section */}
         <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48">
@@ -45,12 +24,14 @@ export default function Home() {
                 </p>
               </div>
               <div className="space-x-4">
-                <Button className="bg-white text-black hover:bg-gray-200" size="lg">
+                <Button className="bg-white text-black hover:text-white hover:bg-black border-2 border-transparent transition-all duration-300 hover:border-rose-300 hover:shadow-purple-400" size="lg">
                   Browse Collection
                 </Button>
-                <Button className="border-white text-white hover:bg-white hover:text-black" size="lg">
-                  How It Works
-                </Button>
+                <a href="#how-it-works">
+                  <Button className="border-2 border-transparent transition-all duration-300 hover:border-rose-300 hover:shadow-purple-400" size="lg">
+                    How It Works
+                  </Button>
+                </a>
               </div>
             </div>
           </div>
@@ -59,7 +40,7 @@ export default function Home() {
         {/* Categories Section */}
         <section className="w-full py-12 md:py-24 lg:py-32">
           <div className="container px-4 md:px-6">
-            <h2 className="text-3xl font-bold tracking-tighter text-center mb-12">Browse by Category</h2>
+            <h2 className="text-3xl font-bold tracking-tighter text-center mb-12">Photo Gallery</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {categories.map((category) => (
                 <Link key={category.name} href="#" className="group relative">
@@ -83,7 +64,7 @@ export default function Home() {
         </section>
 
         {/* How It Works Section */}
-        <section className="w-full py-12 md:py-24 lg:py-32 bg-gray-50">
+        <section id="how-it-works" className="w-full py-12 md:py-24 lg:py-32 bg-gray-50">
           <div className="container px-4 md:px-6">
             <h2 className="text-3xl font-bold tracking-tighter text-center mb-12">How It Works</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -296,7 +277,7 @@ const steps = [
   },
   {
     title: "Receive & Enjoy",
-    description: "Get your outfit delivered to your doorstep. Try it on and feel amazing!",
+    description: "Try it on and feel amazing!",
     icon: Package,
   },
   {
