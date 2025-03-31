@@ -41,25 +41,7 @@ export default function Home() {
         <section className="w-full py-12 md:py-24 lg:py-32">
           <div className="container px-4 md:px-6">
             <h2 className="text-3xl font-bold tracking-tighter text-center mb-12">Photo Gallery</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {categories.map((category) => (
-                <Link key={category.name} href="#" className="group relative">
-                  <div className="relative aspect-[3/4] overflow-hidden rounded-lg">
-                    <Image
-                      src={category.image || "/placeholder.svg"}
-                      alt={category.name}
-                      className="object-cover w-full h-full transition-transform group-hover:scale-105"
-                      width={300}
-                      height={400}
-                    />
-                    <div className="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition-colors" />
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <h3 className="text-2xl font-bold text-white">{category.name}</h3>
-                    </div>
-                  </div>
-                </Link>
-              ))}
-            </div>
+            
           </div>
         </section>
 

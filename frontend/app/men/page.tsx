@@ -3,7 +3,9 @@
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { Search } from "lucide-react";
+import { Search, Sidebar } from "lucide-react";
+import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
+import { CategorySidebar } from "@/components/Sidebar";
 
 export default function CategoryPage() {
     const [loading, setLoading] = useState(true);
@@ -35,9 +37,14 @@ export default function CategoryPage() {
         router.push(`/outfit/${id}`);
     }
 
+    const filteredOutfits = outfits.filter(outfit => outfit.category === category);
+
     return (
+        <SidebarProvider>
+            <CategorySidebar />
+            <SidebarInset className="p-6">
         <div className="container mx-auto p-6">
-            <h1 className="text-3xl font-bold mb-6 capitalize">{category} Collection</h1>
+            <h1 className="text-3xl font-bold mb-6 capitalize">Mens Collection</h1>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {outfits.length > 0 ? (
                     outfits.map((outfit) => (
@@ -60,5 +67,8 @@ export default function CategoryPage() {
                 )}
             </div>
         </div>
+            </SidebarInset>
+        </SidebarProvider>
+        
     );
 }

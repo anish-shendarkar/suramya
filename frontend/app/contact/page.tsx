@@ -7,7 +7,7 @@ export default function ContactPage() {
   return (
     <div className="container mx-auto py-12 px-4 max-w-6xl">
       <div className="text-center mb-12">
-        <h1 className="text-4xl font-bold tracking-tight mb-2">Contact Us</h1>
+        <h1 className="text-4xl font-bold tracking-tight mb-2"><span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-300 to-purple-400">Contact Us</span></h1>
         <p className="text-muted-foreground max-w-2xl mx-auto">
           We'd love to hear from you! Visit our shop or reach out through any of the methods below.
         </p>
