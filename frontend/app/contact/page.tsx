@@ -16,24 +16,15 @@ export default function ContactPage() {
       <div className="space-y-8 max-w-4xl mx-auto">
         <div>
           <h2 className="text-2xl font-semibold mb-6">Our Location</h2>
-          <div className="aspect-video bg-muted rounded-lg overflow-hidden relative">
-            {/* Map View */}
-            <div className="w-full h-full bg-[#f0f0f0] relative">
-              <div
-                className="absolute inset-0"
-                style={{
-                  backgroundImage: "url('/placeholder.svg?height=600&width=800')",
-                  backgroundSize: "cover",
-                  backgroundPosition: "center",
-                }}
-              >
-                {/* Map Pin */}
-                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                  <div className="bg-primary text-primary-foreground p-3 rounded-full shadow-lg">
-                    <MapPin size={24} />
-                  </div>
-                </div>
-              </div>
+          <div className="bg-muted rounded-lg overflow-hidden relative">
+            <div className="flex justify-center items-center">
+              <iframe
+                className="w-full md:w-[900px] h-[450px] border-0 rounded-lg shadow-lg"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15124.419368255501!2d73.90143245000002!3d18.61435355!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc2c71c5e8ababb%3A0xba3003e0355f3004!2sZUDIO%20-%20Lohegaon%2C%20Pune!5e0!3m2!1sen!2sin!4v1743481893046!5m2!1sen!2sin"
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              ></iframe>
             </div>
           </div>
         </div>

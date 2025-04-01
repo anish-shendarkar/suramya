@@ -37,7 +37,7 @@ export default function CategoryPage() {
 
     return (
         <div className="container mt-16 mx-auto p-6">
-            <h1 className="text-3xl font-bold mb-6 capitalize">{category} Collection</h1>
+            <h1 className="text-3xl font-bold mb-6 capitalize">Jewellary Collection</h1>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {jewellery.length > 0 ? (
                     jewellery.map((jewellery) => (
