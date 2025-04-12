@@ -37,14 +37,14 @@ export default function CategoryPage() {
 
     return (
         <div className="container mt-16 mx-auto p-6">
-            <h1 className="text-3xl font-bold mb-6 capitalize">Jewellary Collection</h1>
+            <h1 className="text-3xl font-bold mb-6 capitalize">Jewellery Collection</h1>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {jewellery.length > 0 ? (
                     jewellery.map((jewellery) => (
                         <div onClick={() => handleOnClick(jewellery._id)} key={jewellery?._id} className="rounded-lg p-4 shadow-md border-2 border-transparent transition-all duration-300 hover:border-rose-300 hover:shadow-purple-400 cursor-pointer">
                             
                             <Image
-                                src={ "/placeholder.svg"}
+                                src={ `http://localhost:3333/uploads/jewellery/${jewellery.images[0]}`}
                                 alt={jewellery?.name || "Outfit Image"}
                                 className="object-cover w-full h-64"
                                 width={300}

@@ -51,7 +51,7 @@ export default function CategoryPage() {
                         <div onClick={() => handleOnClick(outfit._id)} key={outfit?._id} className="rounded-lg p-4 shadow-md border-2 border-transparent transition-all duration-300 hover:border-rose-300 hover:shadow-purple-400 cursor-pointer">
                             
                             <Image
-                                src={ "/placeholder.svg"}
+                                src={ `http://localhost:3333/uploads/outfits/${outfit.images[0]}`}
                                 alt={outfit?.name || "Outfit Image"}
                                 className="object-cover w-full h-64"
                                 width={300}

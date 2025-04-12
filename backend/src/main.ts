@@ -7,10 +7,10 @@ import * as cors from 'cors';
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule, { cors: true });
   app.enableCors();
-  await app.listen(process.env.PORT);
   app.useStaticAssets(path.join(__dirname, '..', 'uploads'), {
     prefix: '/uploads',
   });
+  await app.listen(process.env.PORT);
   console.log(`Application is running on port ${process.env.PORT}`);
 }
 bootstrap();

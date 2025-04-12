@@ -1,8 +1,13 @@
 'use client'
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import Link from "next/link"
+import Image from "next/image"
+import { ArrowRight, Clock, Package, RefreshCw, Menu, X } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent } from "@/components/ui/card"
 
 function Navbar() {
-    const [isOpen, setIsOpen] = useState(false);
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     return (
         <nav className="bg-white dark:bg-gray-900 fixed w-full z-20 top-0 start-0 border-b border-gray-200 dark:border-gray-600">
@@ -12,7 +17,12 @@ function Navbar() {
                     <img src="https://flowbite.com/docs/images/logo.svg" className="h-8" alt="Flowbite Logo" />
                     <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Suramya</span>
                 </a>
-
+                <button
+                    onClick={() => setIsMenuOpen(!isMenuOpen)}
+                    className="md:hidden p-2"
+                >
+                    {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+                </button>
                 {/* Navigation Links */}
                 <div className="items-center justify-between hidden w-full md:flex md:w-auto">
                     <ul className="flex space-x-6 ml-8 font-medium [&>li>a:hover]:text-rose-500 [&>li>a]:transition-all duration-300">
@@ -100,6 +110,18 @@ function Navbar() {
                     </ul>
                 </div>
             </div>
+            {isMenuOpen && (
+            <div className="md:hidden py-4 px-2 border-t">
+              <nav className="flex flex-col space-y-4">
+                <Link href="/" className="text-sm font-medium hover:text-primary transition-colors" onClick={() => setIsMenuOpen(false)}>Home</Link>
+                <Link href="/about" className="text-sm font-medium hover:text-primary transition-colors" onClick={() => setIsMenuOpen(false)}>About</Link>
+                <Link href="/women" className="text-sm font-medium hover:text-primary transition-colors" onClick={() => setIsMenuOpen(false)}>Women</Link>
+                <Link href="/men" className="text-sm font-medium hover:text-primary transition-colors" onClick={() => setIsMenuOpen(false)}>Mens</Link>
+                <Link href="/jewellery" className="text-sm font-medium hover:text-primary transition-colors" onClick={() => setIsMenuOpen(false)}>Jewellery</Link>
+                <Link href="/contact" className="text-sm font-medium hover:text-primary transition-colors" onClick={() => setIsMenuOpen(false)}>Contact</Link>
+              </nav>
+            </div>
+          )}
         </nav>
     );
 }

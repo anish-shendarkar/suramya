@@ -9,7 +9,7 @@ import { Label } from "@/components/ui/label"
 import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
 import { useEffect, useState } from "react"
-import { useParams } from "next/navigation"
+import { useParams, useRouter } from "next/navigation"
 import Cookies from "js-cookie"
 
 export default function JewelleryViewer() {
@@ -29,6 +29,7 @@ export default function JewelleryViewer() {
     const [jewellery, setJewellery] = useState<Jewellery | null>(null);
     const { id } = useParams() as { id: string }
     const token = Cookies.get('token')
+    const router = useRouter()
     useEffect(() => {
         const fetchItemById = async () => {
             try {
@@ -52,8 +53,11 @@ export default function JewelleryViewer() {
     }, [id]);
 
     if (!jewellery) return <p className="text-center mt-10">Loading jewellery details...</p>;
-    // URL of images
-    const imageUrl = jewellery?.images?.[0] || "/placeholder.svg";
+
+    const handleOnclick = async () => {
+        router.push(`/contact`)
+    }
+    
     return (
         <div className="container mx-auto px-4 py-6 mt-20">
             <div className="grid lg:grid-cols-2 gap-8 items-start">
@@ -61,7 +65,7 @@ export default function JewelleryViewer() {
                 <div className="space-y-4">
                     <div className="aspect-square relative overflow-hidden rounded-lg border">
                         <Image
-                            src={imageUrl}
+                            src={`http://localhost:3333/uploads/jewellery/${jewellery.images[0]}` || "/placeholder.svg"}
                             alt={jewellery?.name || "jewellery Image"}
                             className="object-cover"
                             fill
@@ -69,13 +73,13 @@ export default function JewelleryViewer() {
                         />
                     </div>
                     <div className="grid grid-cols-4 gap-4">
-                        {[1, 2, 3, 4].map((i) => (
+                        {jewellery.images.map((imgName, i) => (
                             <button
                                 key={i}
                                 className="aspect-square relative overflow-hidden rounded-lg border hover:border-primary transition-colors"
                             >
                                 <Image
-                                    src={`/placeholder.svg?height=150&width=150`}
+                                    src={`http://localhost:3333/uploads/jewellery/${imgName}`}
                                     alt={`Item ${i}`}
                                     className="object-cover"
                                     fill
@@ -117,7 +121,7 @@ export default function JewelleryViewer() {
                             </dl>
                         </div>
 
-                        <Button size="lg" className="w-full">
+                        <Button onClick={handleOnclick} size="lg" className="w-full">
                             <Calendar className="mr-2 h-4 w-4" />
                             Get Now
                         </Button>
