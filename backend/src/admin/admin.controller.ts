@@ -111,4 +111,9 @@ export class AdminController {
     console.log('req.user', req.user);
     return this.adminService.deleteJewelleryItem(req.user.user,jewelleryId);
   }
+
+  @Get('getjewelleryitems')
+  async getAllJewelleryItems() {
+    return this.adminService.getAllJewelleryItems();
+  }
 }

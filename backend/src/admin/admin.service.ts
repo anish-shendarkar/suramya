@@ -67,7 +67,7 @@ export class AdminService {
   }
 
   async getAllOutfits() {
-    return await this.outfitModel.find({}, 'name coverImage').exec();
+    return await this.outfitModel.find().exec();
   }
 
   async getOutfitById(outfitId: string) {
@@ -80,6 +80,8 @@ export class AdminService {
       description: body.description,
       type: body.type,
       color: body.color,
+      price: body.price,
+      deposit: body.deposit,
       coverImage,
       images,
     });
@@ -94,7 +96,7 @@ export class AdminService {
   }
 
   async getAllJewelleryItems() {
-    const jewelleryItems = await this.jewelleryModel.find({}, 'name coverImage').exec();
+    const jewelleryItems = await this.jewelleryModel.find().exec();
     return jewelleryItems;
   }
 
