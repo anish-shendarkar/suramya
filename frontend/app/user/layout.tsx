@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Joan } from "next/font/google";
-import "./globals.css";
+import "../globals.css";
 import Navbar from "@/components/Navbar";
 
 const geistSans = Geist({
@@ -26,9 +26,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} font-serif antialiased mt-16`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased mt-20`}
       >
         {children}
+        <Navbar />
       </body>
     </html>
   );

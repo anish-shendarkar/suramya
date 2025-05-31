@@ -1,4 +1,4 @@
-'use client' // or remove if you're in /pages
+'use client'
 
 import { useState } from "react";
 import Cookies from "js-cookie";
@@ -28,7 +28,7 @@ export default function LoginPage() {
         Cookies.set("auth-token", data.token, { expires: 7 });
 
         alert("Login successful!");
-        router.push("/admin-9970/outfit"); // your admin dashboard
+        router.push("/admin-9970/dashboard"); // your admin dashboard
       } else {
         alert(data.message || "Login failed.");
       }

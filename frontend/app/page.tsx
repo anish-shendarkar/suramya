@@ -6,12 +6,14 @@ import { ArrowRight, Clock, Package, RefreshCw } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { useState, useEffect } from "react"
+import Navbar from "@/components/Navbar"
 
 export default function Home() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   
   return (
     <div className="flex flex-col min-h-screen font-[Joan]">
+      <Navbar />
       <main className="flex-1">
         {/* Hero Section */}
         <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48">
