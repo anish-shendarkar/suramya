@@ -62,6 +62,7 @@ export class AdminController {
     );
   }
 
+  @Delete('deleteoutfit/:outfitId')
   async deleteOutfit(@Param('outfitId') outfitId, @Request() req) {
     return this.adminService.deleteOutfit(req.user.user, outfitId);
   }
@@ -109,7 +110,7 @@ export class AdminController {
   @Delete('deletejewelleryitem/:jewelleryId')
   async deleteJewelleryItem(@Param('jewelleryId') jewelleryId, @Request() req) {
     console.log('req.user', req.user);
-    return this.adminService.deleteJewelleryItem(req.user.user,jewelleryId);
+    return this.adminService.deleteJewelleryItem(req.user.user, jewelleryId);
   }
 
   @Get('getjewelleryitems')
