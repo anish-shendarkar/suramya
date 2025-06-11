@@ -74,6 +74,19 @@ export class AdminService {
     return await this.outfitModel.findById(outfitId).exec();
   }
 
+  async updateOutfit(outfitId: string, updateData: Record<string, any> ) {
+    const outfit = await this.outfitModel.findByIdAndUpdate(
+      outfitId,
+      { $set: updateData},
+      { new: true, runValidators: true}
+    );
+    if (!outfit) {
+      throw new BadRequestException('Outfit not found');
+    }
+    await outfit.save();
+    return {message: 'Outfit updated successfully', outfit};
+  }
+
   async createJewelleryItem(user: User, body, coverImage: string, images: string[]) {
     const jewelleryItem = new this.jewelleryModel({
       name: body.name,

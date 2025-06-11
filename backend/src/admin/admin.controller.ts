@@ -77,6 +77,14 @@ export class AdminController {
     return this.adminService.getOutfitById(outfitId);
   }
 
+  @Patch('editoutfit/:outfitId')
+  async updateOutfit(
+    @Param('outfitId') outfitId,
+    @Body() body: Record<string, any>,
+  ) {
+    return this.adminService.updateOutfit(outfitId, body);
+  }
+
   @Post('createjewelleryitem')
   @UseInterceptors(
     FilesInterceptor('images', 10, {
