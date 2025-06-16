@@ -56,4 +56,31 @@ export class UserService {
         }
         return jewelleryItems;
     }
+
+    //search functionality
+    async searchOutfit(query: string) {
+        const outfits = await this.outfitModel.find({
+            $or: [
+                { name: { $regex: query, $options: 'i' } },
+                { description: { $regex: query, $options: 'i' } },
+            ]
+        });
+        if (outfits.length === 0) {
+            return new BadRequestException('Outfits not found');
+        }
+        return outfits;
+    }
+
+    async searchJewellery(query: string) {
+        const jewelleryItems = await this.jewellaryModel.find({
+            $or: [
+                { name: { $regex: query, $options: 'i' } },
+                { description: { $regex: query, $options: 'i' } },
+            ]
+        });
+        if (jewelleryItems.length === 0) {
+            return new BadRequestException('Jewellery not found');
+        }
+        return jewelleryItems;
+    }
 }

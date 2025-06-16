@@ -1,4 +1,4 @@
-import { Controller } from '@nestjs/common';
+import { Controller, Query } from '@nestjs/common';
 import { UserService } from './user.service';
 import {
   Get,
@@ -54,5 +54,15 @@ export class UserController {
   @Get('alljewellery')
   async getAllJewellery() {
     return this.userService.getAllJewelleryItems();
+  }
+
+  @Get('search/outfit')
+  async search(@Query('query') query: string) {
+    return this.userService.searchOutfit(query);
+  }
+
+  @Get('search/jewellery')
+  async searchJewellery(@Query('query') query: string) {
+    return this.userService.searchJewellery(query);
   }
 }
