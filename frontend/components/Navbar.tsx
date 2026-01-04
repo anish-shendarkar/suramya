@@ -14,8 +14,8 @@ function Navbar() {
             <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
                 {/* Logo */}
                 <a href="/" className="flex items-center space-x-3 rtl:space-x-reverse">
-                    <img src="https://flowbite.com/docs/images/logo.svg" className="h-8" alt="Flowbite Logo" />
-                    <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Suramya</span>
+                    <img src="/suramya_logo.jpg" className="h-8" alt="Suramya Logo" />
+                    <span className="self-center text-2xl font-extrabold whitespace-nowrap dark:text-white text-transparent bg-clip-text bg-gradient-to-r from-rose-300 to-purple-400 to-90%">Suramya</span>
                 </a>
                 <button
                     onClick={() => setIsMenuOpen(!isMenuOpen)}

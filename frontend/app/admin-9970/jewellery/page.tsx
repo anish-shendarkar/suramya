@@ -1,160 +1,122 @@
 'use client'
+import React, { use, useEffect, useState } from 'react'
+import AdminNavbar from '@/components/AdminNavbar'
+import { Typewriter } from 'react-simple-typewriter'
+import { useRouter } from 'next/navigation'
+import Cookies from 'js-cookie'
+import Image from 'next/image'
+import { Button } from '@/components/ui/button'
 
-import { use, useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import Cookies from "js-cookie";
-import { Card } from "@/components/ui/card";
-import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
-import AdminNavbar from "@/components/AdminNavbar";
+function allJewellery() {
+  const [jewellery, setJewellery] = useState<any[]>([])
+  const router = useRouter()
 
-function Jewellery() {
-    const [files, setFiles] = useState<File[]>([]);
-    const [name, setName] = useState("");
-    const [description, setDescription] = useState("");
-    const [type, setType] = useState("");
-    const [color, setColor] = useState("");
-    const [price, setPrice] = useState("");
-    const [deposit, setDeposit] = useState("");
-
-    const router = useRouter();
-
-    useEffect(() => {
-        const token = Cookies.get("auth-token");
-        console.log("Token:", token);
-        if (!token) {
-            alert("You are not logged in. Please log in to access this page.");
-            router.push("/admin-9970/login");
-        }
-    }, []);
-
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-
-        const token = Cookies.get("auth-token");
-
-        const formData = new FormData();
-        formData.append("name", name);
-        formData.append("description", description);
-        formData.append("type", type);
-        formData.append("color", color);
-        formData.append("price", price);
-        formData.append("deposit", deposit);
-        files.forEach((file, index) => {
-            formData.append("images", file);
-        });
-
-        const response = await fetch("http://localhost:3333/admin/createjewelleryitem", {
-            method: "POST",
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-            body: formData,
-        });
-
-        if (response.ok) {
-            alert("Jewellery created successfully!");
-            router.push("/admin-9970/dashboard");
-        } else {
-            const errorData = await response.json();
-            console.error("Failed to create jewellery:", errorData);
-            alert("Failed to create jewellery. Please try again.");
-        }
+  useEffect(() => {
+    const token = Cookies.get('auth-token');
+    if (!token) {
+      alert('You are not logged in. Please log in to access this page.')
+      router.push('/admin-9970/login')
     }
+    // Fetch Jewellerys from the API
+    const fetchAllJewellery = async () => {
+      try {
+        const response = await fetch('http://localhost:3333/admin/getjewelleryitems', {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        })
+        if (!response.ok) {
+          throw new Error('Failed to fetch Jewellery')
+        }
+        const data = await response.json()
+        setJewellery(data)
+      } catch (error) {
+        console.error('Error fetching Jewellery:', error)
+      }
+    };
+    fetchAllJewellery()
+  }, [])
 
-    return (
-        <div>
-            <AdminNavbar />
-            <h1 className="text-3xl text-center font-bold mx-3">Create Jewellery Item</h1>
-            <Card className="w-full max-w-2xl mx-auto my-6 p-6">
-                <form onSubmit={handleSubmit}>
-                    <div className="mb-4">
-                        <label className="block text-sm font-medium mb-2">Jewellery Name</label>
-                        <input
-                            type="text"
-                            name="name"
-                            className="w-full p-2 border border-gray-300 rounded"
-                            placeholder="Enter jewellery name"
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
-                            required
-                        />
-                    </div>
-                    <div className="mb-4">
-                        <label className="block text-sm font-medium mb-2">Description</label>
-                        <textarea
-                            name="description"
-                            className="w-full p-2 border border-gray-300 rounded"
-                            placeholder="Enter description"
-                            value={description}
-                            onChange={(e) => setDescription(e.target.value)}
-                            required
-                        ></textarea>
-                    </div>
-                    <div className="mb-4">
-                        <label className="block text-sm font-medium mb-2">Type</label>
-                        <input
-                            name="type"
-                            className="w-full p-2 border border-gray-300 rounded"
-                            placeholder="Enter Type"
-                            value={type}
-                            onChange={(e) => setType(e.target.value)}
-                        ></input>
-                    </div>
-                    <div className="mb-4">
-                        <label className="block text-sm font-medium mb-2">Color</label>
-                        <input
-                            name="color"
-                            className="w-full p-2 border border-gray-300 rounded"
-                            placeholder="Enter color of the jewellery"
-                            value={color}
-                            onChange={(e) => setColor(e.target.value)}
-                        ></input>
-                    </div>
-                    <div className="mb-4">
-                        <label className="block text-sm font-medium mb-2">Price per day</label>
-                        <input
-                            type="number"
-                            name="price"
-                            className="w-full p-2 border border-gray-300 rounded"
-                            placeholder="Enter price per day"
-                            value={price}
-                            onChange={(e) => setPrice(e.target.value)}
-                            required
-                        />
-                    </div>
-                    <div className="mb-4">
-                        <label className="block text-sm font-medium mb-2">Deposit</label>
-                        <input
-                            type="number"
-                            name="deposit"
-                            className="w-full p-2 border border-gray-300 rounded"
-                            placeholder="Enter price"
-                            value={deposit}
-                            onChange={(e) => setDeposit(e.target.value)}
-                            required
-                        />
-                    </div>
-                    <div className="mb-4">
-                        <label htmlFor="file" className="block text-sm font-medium mb-2">Images</label>
-                        <input
-                            id="file"
-                            type="file"
-                            multiple
-                            onChange={(e) => setFiles(Array.from(e.target.files || []))}
-                            required
-                        />
-                    </div>
-                    <button
-                        type="submit"
-                        className="block mx-auto px-4 py-2 rounded-lg p-4 shadow-md border-2 border-transparent transition-all duration-300 hover:border-rose-300 hover:shadow-purple-400 cursor-pointer"
-                    >
-                        Create Jewellery Item
-                    </button>
-                </form>
-            </Card>
+  const handleDeleteJewellery = async (jewelleryId: string) => {
+    const token = Cookies.get('auth-token');
+    const confirmDelete = confirm('Are you sure you want to delete this Jewellery?')
+    if (confirmDelete) {
+      try {
+        const response = await fetch(`http://localhost:3333/admin/deleteJewellery/${jewelleryId}`, {
+          method: 'DELETE',
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        })
+        if (!response.ok) {
+          throw new Error('Failed to delete Jewellery')
+        }
+        // Remove the deleted Jewellery from the state
+        setJewellery(jewellery.filter(jewellery => jewellery._id !== jewelleryId))
+      } catch (error) {
+        console.error('Error deleting Jewellery:', error)
+      }
+    }
+  };
+
+  return (
+    <>
+      <AdminNavbar />
+      <div className='flex flex-col h-screen bg-gray-100'>
+        <div className='flex items-center justify-between px-8 mt-4'>
+          <h2 className='text-2xl font-semibold'>
+            <span className='text-rose-500'>
+              <Typewriter
+                words={['Create', 'Edit', 'Delete', 'Manage']}
+                loop={2}
+                cursor
+                cursorStyle='_'
+                typeSpeed={70}
+                deleteSpeed={50}
+                delaySpeed={1000}
+              />
+            </span>
+            {''}Jewellery
+          </h2>
+          <button onClick={() => router.push(`jewellery/create`)} className="px-4 py-2 rounded-md border border-neutral-300 bg-neutral-100 text-slate-700 text-sm hover:-translate-y-1 transform transition duration-200 hover:shadow-md">
+            Create New Jewellery
+          </button>
         </div>
-    )
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 p-8">
+          {jewellery.length > 0 ? (
+            jewellery.map((jewellery) => (
+              <div key ={jewellery._id} className="rounded-lg p-4 shadow-md border-2 border-transparent transition-all duration-300 hover:border-rose-300 hover:shadow-purple-400 cursor-pointer">
+                <Image
+                  src={`http://localhost:3333/uploads/jewellery/${jewellery.images[0]}`}
+                  alt={jewellery?.name || "Jewellery Image"}
+                  className="object-cover w-full h-64"
+                  width={300}
+                  height={400}
+                />
+                <h2 className="text-xl font-semibold mt-2">{jewellery?.name}</h2>
+                <Button
+                  className="mt-2 bg-rose-400 text-white hover:bg-rose-500"
+                  onClick={() => router.push(`/admin-9970/Jewellery/edit/${jewellery._id}`)}
+                >
+                  Edit
+                </Button>
 
+                <Button
+                  className="mx-2 mt-2 bg-red-500 text-white hover:bg-rose-700"
+                  onClick={() => { handleDeleteJewellery(jewellery._id) }}>
+                  Delete
+                </Button>
+
+              </div>
+            ))
+          ) : (
+            <p className="text-gray-500">No products available for this category.</p>
+          )}
+        </div>
+      </div>
+    </>
+  )
 }
 
-export default Jewellery;
+export default allJewellery

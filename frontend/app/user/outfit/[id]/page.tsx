@@ -30,6 +30,7 @@ export default function OutfitViewer() {
     }
 
     const [outfit, setOutfit] = useState<Outfit | null>(null);
+    const [selectedImage, setSelectedImage] = useState<string | null>(null);
     const { id } = useParams() as { id: string }
     const token = Cookies.get('token')
     const router = useRouter()
@@ -37,7 +38,6 @@ export default function OutfitViewer() {
     useEffect(() => {
         const fetchOutfitById = async () => {
             try {
-                console.log('fetching outfit by id', id);
                 const response = await fetch(`http://localhost:3333/user/outfit/${id}`, {
                     method: 'GET',
                 });
@@ -46,7 +46,9 @@ export default function OutfitViewer() {
                 }
 
                 const data = await response.json();
+                console.log('Fetched outfit data:', data);
                 setOutfit(data);
+                setSelectedImage(data.images[0]);
             }
             catch (error) {
                 console.error('Error:', error);
@@ -57,7 +59,7 @@ export default function OutfitViewer() {
     }, [id]);
 
     const handleOnclick = async () => {
-        router.push(`/contact`)
+        router.push(`/user/contact`)
     }
     if (!outfit) return <p className="text-center mt-10">Loading outfit details...</p>;
     // URL of images
@@ -68,7 +70,7 @@ export default function OutfitViewer() {
                 <div className="space-y-4">
                     <div className="aspect-square relative overflow-hidden rounded-lg border">
                         <Image
-                            src={`http://localhost:3333/uploads/outfits/${outfit.images[0]}`}
+                            src={`http://localhost:3333/uploads/outfits/${selectedImage}`}
                             alt={outfit?.name || "Outfit Image"}
                             className="object-cover"
                             fill
@@ -77,9 +79,9 @@ export default function OutfitViewer() {
                     </div>
                     <div className="grid grid-cols-4 gap-4">
                         {outfit.images.map((imgName, i) => (
-                            <button
+                            <button onClick={ () => { setSelectedImage(imgName) }}
                                 key={i}
-                                className="aspect-square relative overflow-hidden rounded-lg border hover:border-primary transition-colors"
+                                className={`aspect-square relative overflow-hidden rounded-lg border hover:border-primary transition-colors ${selectedImage === imgName ? 'border-primary' : 'border-transparent'}`}
                             >
                                 <Image
                                     src={`http://localhost:3333/uploads/outfits/${imgName}`}
@@ -118,8 +120,8 @@ export default function OutfitViewer() {
 
                         <div>
                             <h3 className="font-semibold mb-2">Details</h3>
-                            <dl className="grid grid-cols-2 gap-2 text-sm">
-                                <dt className="text-muted-foreground">Color</dt>
+                            <dl className="flex items-center gap-2 text-sm">
+                                <dt className="text-muted-foreground">Color:</dt>
                                 <dd className="capitalize">{outfit?.color}</dd>
                             </dl>
                         </div>

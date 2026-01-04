@@ -35,87 +35,14 @@ function Navbar() {
                 <div className="items-center justify-between hidden w-full md:flex md:w-auto">
                     <ul className="flex space-x-6 ml-8 font-medium [&>li>a:hover]:text-rose-500 [&>li>a]:transition-all duration-300">
                         <li>
-                            <a href="/">Home</a>
-                        </li>
-                        <li>
-                            <a href="/user/about">About</a>
+                            <a href="/admin-9970/dashboard">Dashboard</a>
                         </li>
                         <li className="group">
-                            <a href="/user/women">Women</a>
-                            <div className="absolute left-10 max-w-[95%] mt-2 w-screen bg-white shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 p-6">
-                                <div className="grid grid-cols-2">
-                                    <div>
-                                        <h3 className="text-rose-500 text-lg font-medium mb-3 pl-4">Category</h3>
-                                        <ul className="py-2 text-gray-800 [&>li>a]:px-4 [&>li>a]:py-2 [&>li>a]:block [&>li>a:hover]:underline [&>li>a:hover]:text-rose-500 [&>li>a]:transition-colors">
-                                            <li><a href="/user/women">All</a></li>
-                                            <li><a href="#">Lehengas</a></li>
-                                            <li><a href="#">Maternity</a></li>
-                                            <li><a href="#">Sarees</a></li>
-                                            <li><a href="#">Blouse</a></li>
-                                            <li><a href="#">Gowns</a></li>
-                                            <li><a href="#">Nauvari Sarees</a></li>
-                                            <li><a href="#">Navratri Collection</a></li>
-                                            <li><a href="#">Short Dresses</a></li>
-                                            <li><a href='#'>Women Accessories</a></li>
-                                        </ul>
-                                    </div>
-                                    <div>
-                                        <h3 className="text-rose-500 text-lg font-medium mb-3 pl-4">Occasion</h3>
-                                        <ul className="py-2 text-gray-800 [&>li>a]:px-4 [&>li>a]:py-2 [&>li>a]:block [&>li>a:hover]:underline [&>li>a:hover]:text-rose-500 [&>li>a]:transition-colors">
-                                            <li><a href="#">Pre Wedding</a></li>
-                                            <li><a href="#">Maternity</a></li>
-                                            <li><a href="#">Wedding</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
+                            <a href="/admin-9970/outfit">Outfits</a>   
                         </li>
                         <li className="group">
-                            <a href="/user/men">Mens</a>
-                            <div className="absolute left-10 max-w-[95%] mt-2 w-screen bg-white shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 p-6">
-                                <div className="grid grid-cols-2">
-                                    <div>
-                                        <h3 className="text-rose-500 text-lg font-medium mb-3 pl-4">Category</h3>
-                                        <ul className="py-2 text-gray-800 [&>li>a]:px-4 [&>li>a]:py-2 [&>li>a]:block [&>li>a:hover]:underline [&>li>a:hover]:text-rose-500 [&>li>a]:transition-colors">
-                                            <li><a href="/user/men">All</a></li>
-                                            <li><a href="#">Shervani</a></li>
-                                            <li><a href="#">Jodhpuri</a></li>
-                                            <li><a href="#">Tuxedo</a></li>
-                                            <li><a href="#">Blazer</a></li>
-                                            <li><a href="#">Modi Jackets</a></li>
-                                            <li><a href="#">Waist Coat</a></li>
-                                            <li><a href='#'>Mens Accessories</a></li>
-                                        </ul>
-                                    </div>
-                                    <div>
-                                        <h3 className="text-rose-500 text-lg font-medium mb-3 pl-4">Occasion</h3>
-                                        <ul className="py-2 text-gray-800 [&>li>a]:px-4 [&>li>a]:py-2 [&>li>a]:block [&>li>a:hover]:underline [&>li>a:hover]:text-rose-500 [&>li>a]:transition-colors">
-                                            <li><a href="#">Pre Wedding</a></li>
-                                            <li><a href="#">Wedding</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
+                            <a href="/admin-9970/jewellery">Jewellery</a>
                         </li>
-                        <li>
-                            <a href="/user/jewellery">Jewellery</a>
-                        </li>
-                        <li className="relative group">
-                            <a href="/user/women" className="hover:text-rose-500">Occasion</a>
-                            <div className="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
-                                <ul className="py-2 text-gray-800">
-                                    <li><a href="#" className="block px-4 py-2 hover:bg-gray-100">Pre Wedding</a></li>
-                                    <li><a href="#" className="block px-4 py-2 hover:bg-gray-100">Maternity</a></li>
-                                    <li><a href="#" className="block px-4 py-2 hover:bg-gray-100">Wedding</a></li>
-                                </ul>
-                            </div>
-                        </li>
-
-
-                        <li>
-                            <a href="/user/contact">Contact</a>
-                        </li>
-
                         <li>
                             <button
                                 onClick={() => handleLogout()}
@@ -130,12 +57,10 @@ function Navbar() {
             {isMenuOpen && (
                 <div className="md:hidden py-4 px-2 border-t">
                     <nav className="flex flex-col space-y-4">
-                        <Link href="/" className="text-sm font-medium hover:text-primary transition-colors" onClick={() => setIsMenuOpen(false)}>Home</Link>
-                        <Link href="/user/about" className="text-sm font-medium hover:text-primary transition-colors" onClick={() => setIsMenuOpen(false)}>About</Link>
-                        <Link href="/user/women" className="text-sm font-medium hover:text-primary transition-colors" onClick={() => setIsMenuOpen(false)}>Women</Link>
-                        <Link href="/user/men" className="text-sm font-medium hover:text-primary transition-colors" onClick={() => setIsMenuOpen(false)}>Mens</Link>
-                        <Link href="/user/jewellery" className="text-sm font-medium hover:text-primary transition-colors" onClick={() => setIsMenuOpen(false)}>Jewellery</Link>
-                        <Link href="/user/contact" className="text-sm font-medium hover:text-primary transition-colors" onClick={() => setIsMenuOpen(false)}>Contact</Link>
+                        <Link href="/admin-9970/dashboard" className="text-sm font-medium hover:text-primary transition-colors" onClick={() => setIsMenuOpen(false)}>Dashboard</Link>
+                        <Link href="/admin-9970/outfit" className="text-sm font-medium hover:text-primary transition-colors" onClick={() => setIsMenuOpen(false)}>Outfits</Link>
+                        <Link href="/admin-9970/jewellery" className="text-sm font-medium hover:text-primary transition-colors" onClick={() => setIsMenuOpen(false)}>Jewellery</Link>
+                        <Link href="/" className="text-sm font-medium hover:text-primary transition-colors" onClick={() => setIsMenuOpen(false)}>Logout</Link>
                     </nav>
                 </div>
             )}

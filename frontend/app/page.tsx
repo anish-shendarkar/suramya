@@ -7,20 +7,50 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { useState, useEffect } from "react"
 import Navbar from "@/components/Navbar"
+import { useRouter } from "next/navigation"
 
 export default function Home() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
-  
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [newArrivals, setNewArrivals] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const router = useRouter();
+
+  // Fetch new arrivals on component mount
+  useEffect(() => {
+    const fetchNewArrivals = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch('http://localhost:3333/user/newarrivals');
+
+        if (!response.ok) {
+          throw new Error('Failed to fetch new arrivals');
+        }
+
+        const data = await response.json();
+        setNewArrivals(data);
+        setError(null);
+      } catch (err: any) {
+        console.error('Error fetching new arrivals:', err);
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchNewArrivals();
+  }, []);
+
   return (
     <div className="flex flex-col min-h-screen font-[Joan]">
       <Navbar />
       <main className="flex-1">
         {/* Hero Section */}
-        <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48">
+        <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48 bg-gradient-to-b from-rose-300/30 via-purple-300/20 to-white">
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center space-y-4 text-center">
               <div className="space-y-2">
-                <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none animate-fade-in-up">
+                <h1 className="p-2 text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none animate-fade-in-up">
                   Rent Designer Wear for Your Special Moments
                 </h1>
                 <p className="mx-auto max-w-[700px] text-gray-500 md:text-xl">
@@ -29,9 +59,11 @@ export default function Home() {
                 </p>
               </div>
               <div className="space-x-4">
-                <Button className="bg-white text-black hover:text-white hover:bg-black border-2 border-transparent transition-all duration-300 hover:border-rose-300 hover:shadow-purple-400" size="lg">
-                  Browse Collection
-                </Button>
+                <a href="#new-arrivals">
+                  <Button className="bg-white text-black hover:text-white hover:bg-black border-2 border-transparent transition-all duration-300 hover:border-rose-300 hover:shadow-purple-400" size="lg">
+                    Browse Collection
+                  </Button>
+                </a>
                 <a href="#how-it-works">
                   <Button className="border-2 border-transparent transition-all duration-300 hover:border-rose-300 hover:shadow-purple-400" size="lg">
                     How It Works
@@ -46,7 +78,7 @@ export default function Home() {
         <section className="w-full py-12 md:py-24 lg:py-32">
           <div className="container px-4 md:px-6">
             <h2 className="text-3xl font-bold tracking-tighter text-center mb-12">Photo Gallery</h2>
-            
+
           </div>
         </section>
 
@@ -77,7 +109,7 @@ export default function Home() {
                 View All <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {popularItems.map((item) => (
                 <Card key={item.name} className="group">
                   <CardContent className="p-0">
@@ -96,6 +128,59 @@ export default function Home() {
                       <div className="flex justify-between items-center">
                         <p className="font-bold">₹{item.rentalPrice}/day</p>
                         <Button size="sm">Rent Now</Button>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+            <Button variant="ghost" className="w-full mt-6 md:hidden">
+              View All <ArrowRight className="ml-2 h-4 w-4" />
+            </Button>
+          </div>
+        </section>
+
+        {/* New Arrivals Section with API Integration */}
+        <section id="new-arrivals" className="w-full py-12 md:py-24 lg:py-32">
+          <div className="container px-4 md:px-6">
+            <div className="flex items-center justify-between mb-12">
+              <h2 className="text-3xl font-bold tracking-tighter">New Arrivals</h2>
+              <Button variant="ghost" className="hidden md:flex">
+                View All <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+            </div>
+
+            {loading ? (
+              <div className="flex justify-center items-center py-12">
+                <p className="text-gray-500">Loading new arrivals...</p>
+              </div>
+            ) : error ? (
+              <div className="flex justify-center items-center py-12">
+                <p className="text-red-500">Failed to load new arrivals. Showing sample items.</p>
+              </div>
+            ) : null}
+
+            <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {newArrivals.map((item, index) => (
+                <Card key={item._id || index} className="group">
+                  <CardContent className="p-0">
+                    <div className="relative aspect-[3/4] overflow-hidden rounded-t-lg">
+                      <Image
+                        src={`http://localhost:3333/uploads/outfits/${item.images[0]}`}
+                        alt={item.name || item.title}
+                        className="object-cover w-full h-full transition-transform group-hover:scale-105"
+                        width={300}
+                        height={400}
+                      />
+                    </div>
+                    <div className="p-4">
+                      <h3 className="font-semibold mb-1">{item.name || item.title}</h3>
+                      <p className="text-sm text-gray-500 mb-2">{item.designer || item.brand || 'Designer'}</p>
+                      <div className="flex justify-between items-center">
+                        <p className="font-bold">₹{item.rentalPrice || item.price}/day</p>
+                        <Button size="sm" onClick={() => router.push(`user/outfit/${item._id}`)}>
+                          Rent Now
+                        </Button>
                       </div>
                     </div>
                   </CardContent>
@@ -300,4 +385,3 @@ const popularItems = [
     image: "/placeholder.svg?height=400&width=300",
   },
 ]
-

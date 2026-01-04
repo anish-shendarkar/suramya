@@ -26,7 +26,7 @@ function dashboard() {
                 <h2 className="text-2xl font-semibold px-6">Create {' '}
                     <span className="text-rose-500">
                         <Typewriter
-                            words={['Outfits', 'Jewellery', 'Accessories', 'Collections']}
+                            words={['Outfits', 'Jewellery', 'Collections', 'Memories ❤️']}
                             loop={2}
                             cursor
                             cursorStyle='|'
