@@ -12,15 +12,18 @@ import { useRouter } from "next/navigation"
 export default function Home() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [newArrivals, setNewArrivals] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [popularItems, setPopularItems] = useState<any[]>([]);
+  const [loadingNew, setLoadingNew] = useState(true);
+  const [loadingPopular, setLoadingPopular] = useState(true);
+  const [errorNew, setErrorNew] = useState(null);
+  const [errorPopular, setErrorPopular] = useState(null);
   const router = useRouter();
 
   // Fetch new arrivals on component mount
   useEffect(() => {
     const fetchNewArrivals = async () => {
       try {
-        setLoading(true);
+        setLoadingNew(true);
         const response = await fetch('http://localhost:3333/user/newarrivals');
 
         if (!response.ok) {
@@ -29,16 +32,41 @@ export default function Home() {
 
         const data = await response.json();
         setNewArrivals(data);
-        setError(null);
+        setErrorNew(null);
       } catch (err: any) {
         console.error('Error fetching new arrivals:', err);
-        setError(err.message);
+        setErrorNew(err.message);
       } finally {
-        setLoading(false);
+        setLoadingNew(false);
       }
     };
 
     fetchNewArrivals();
+  }, []);
+
+  // Fetch popular items on component mount
+  useEffect(() => {
+    const fetchPopularItems = async () => {
+      try {
+        setLoadingPopular(true);
+        const response = await fetch('http://localhost:3333/user/popularoutfits');
+
+        if (!response.ok) {
+          throw new Error('Failed to fetch popular items');
+        }
+
+        const data = await response.json();
+        setPopularItems(data);
+        setErrorPopular(null);
+      } catch (err: any) {
+        console.error('Error fetching popular items:', err);
+        setErrorPopular(err.message);
+      } finally {
+        setLoadingPopular(false);
+      }
+    };
+
+    fetchPopularItems();
   }, []);
 
   return (
@@ -46,26 +74,26 @@ export default function Home() {
       <Navbar />
       <main className="flex-1">
         {/* Hero Section */}
-        <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48 bg-gradient-to-b from-rose-300/30 via-purple-300/20 to-white">
+        <section className="w-full py-8 sm:py-12 md:py-24 lg:py-32 xl:py-48 bg-gradient-to-b from-rose-300/30 via-purple-300/20 to-white">
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center space-y-4 text-center">
               <div className="space-y-2">
-                <h1 className="p-2 text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none animate-fade-in-up">
+                <h1 className="p-2 text-2xl sm:text-3xl font-bold tracking-tighter md:text-4xl lg:text-5xl xl:text-6xl/none animate-fade-in-up">
                   Rent Designer Wear for Your Special Moments
                 </h1>
-                <p className="mx-auto max-w-[700px] text-gray-500 md:text-xl">
+                <p className="mx-auto max-w-[700px] text-gray-500 text-sm sm:text-base md:text-xl px-4">
                   Premium collection of traditional and contemporary wear. Rent authentic designer pieces at a fraction
                   of the cost.
                 </p>
               </div>
-              <div className="space-x-4">
-                <a href="#new-arrivals">
-                  <Button className="bg-white text-black hover:text-white hover:bg-black border-2 border-transparent transition-all duration-300 hover:border-rose-300 hover:shadow-purple-400" size="lg">
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full sm:w-auto px-4">
+                <a href="#new-arrivals" className="w-full sm:w-auto">
+                  <Button className="w-full sm:w-auto bg-white text-black hover:text-white hover:bg-black border-2 border-transparent transition-all duration-300 hover:border-rose-300 hover:shadow-purple-400" size="lg">
                     Browse Collection
                   </Button>
                 </a>
-                <a href="#how-it-works">
-                  <Button className="border-2 border-transparent transition-all duration-300 hover:border-rose-300 hover:shadow-purple-400" size="lg">
+                <a href="#how-it-works" className="w-full sm:w-auto">
+                  <Button className="w-full sm:w-auto border-2 border-transparent transition-all duration-300 hover:border-rose-300 hover:shadow-purple-400" size="lg">
                     How It Works
                   </Button>
                 </a>
@@ -75,24 +103,23 @@ export default function Home() {
         </section>
 
         {/* Categories Section */}
-        <section className="w-full py-12 md:py-24 lg:py-32">
+        <section className="w-full py-8 sm:py-12 md:py-24 lg:py-32">
           <div className="container px-4 md:px-6">
-            <h2 className="text-3xl font-bold tracking-tighter text-center mb-12">Photo Gallery</h2>
-
+            <h2 className="text-2xl sm:text-3xl font-bold tracking-tighter text-center mb-8 sm:mb-12">Photo Gallery</h2>
           </div>
         </section>
 
         {/* How It Works Section */}
-        <section id="how-it-works" className="w-full py-12 md:py-24 lg:py-32 bg-gray-50">
+        <section id="how-it-works" className="w-full py-8 sm:py-12 md:py-24 lg:py-32 bg-gray-50">
           <div className="container px-4 md:px-6">
-            <h2 className="text-3xl font-bold tracking-tighter text-center mb-12">How It Works</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <h2 className="text-2xl sm:text-3xl font-bold tracking-tighter text-center mb-8 sm:mb-12">How It Works</h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
               {steps.map((step) => (
                 <Card key={step.title} className="relative overflow-hidden">
-                  <CardContent className="p-6">
-                    <step.icon className="w-12 h-12 mb-4 text-primary" />
-                    <h3 className="text-xl font-bold mb-2">{step.title}</h3>
-                    <p className="text-gray-500">{step.description}</p>
+                  <CardContent className="p-4 sm:p-6">
+                    <step.icon className="w-10 h-10 sm:w-12 sm:h-12 mb-3 sm:mb-4 text-primary" />
+                    <h3 className="text-lg sm:text-xl font-bold mb-2">{step.title}</h3>
+                    <p className="text-sm sm:text-base text-gray-500">{step.description}</p>
                   </CardContent>
                 </Card>
               ))}
@@ -101,85 +128,41 @@ export default function Home() {
         </section>
 
         {/* Popular Items Section */}
-        <section className="w-full py-12 md:py-24 lg:py-32">
+        <section className="w-full py-8 sm:py-12 md:py-16 lg:py-20">
           <div className="container px-4 md:px-6">
-            <div className="flex items-center justify-between mb-12">
-              <h2 className="text-3xl font-bold tracking-tighter">Popular This Week</h2>
-              <Button variant="ghost" className="hidden md:flex">
-                View All <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </div>
-            <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {popularItems.map((item) => (
-                <Card key={item.name} className="group">
-                  <CardContent className="p-0">
-                    <div className="relative aspect-[3/4] overflow-hidden rounded-t-lg">
-                      <Image
-                        src={item.image || "/placeholder.svg"}
-                        alt={item.name}
-                        className="object-cover w-full h-full transition-transform group-hover:scale-105"
-                        width={300}
-                        height={400}
-                      />
-                    </div>
-                    <div className="p-4">
-                      <h3 className="font-semibold mb-1">{item.name}</h3>
-                      <p className="text-sm text-gray-500 mb-2">{item.designer}</p>
-                      <div className="flex justify-between items-center">
-                        <p className="font-bold">₹{item.rentalPrice}/day</p>
-                        <Button size="sm">Rent Now</Button>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-            <Button variant="ghost" className="w-full mt-6 md:hidden">
-              View All <ArrowRight className="ml-2 h-4 w-4" />
-            </Button>
-          </div>
-        </section>
-
-        {/* New Arrivals Section with API Integration */}
-        <section id="new-arrivals" className="w-full py-12 md:py-24 lg:py-32">
-          <div className="container px-4 md:px-6">
-            <div className="flex items-center justify-between mb-12">
-              <h2 className="text-3xl font-bold tracking-tighter">New Arrivals</h2>
-              <Button variant="ghost" className="hidden md:flex">
-                View All <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-8 sm:mb-12 gap-4">
+              <h2 className="text-2xl sm:text-3xl font-bold tracking-tighter">Popular This Week</h2>
             </div>
 
-            {loading ? (
+            {loadingPopular ? (
               <div className="flex justify-center items-center py-12">
-                <p className="text-gray-500">Loading new arrivals...</p>
+                <p className="text-gray-500">Loading popular items...</p>
               </div>
-            ) : error ? (
+            ) : errorPopular ? (
               <div className="flex justify-center items-center py-12">
-                <p className="text-red-500">Failed to load new arrivals. Showing sample items.</p>
+                <p className="text-red-500">Failed to load popular items.</p>
               </div>
             ) : null}
 
-            <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {newArrivals.map((item, index) => (
+            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+              {popularItems.map((item, index) => (
                 <Card key={item._id || index} className="group">
                   <CardContent className="p-0">
                     <div className="relative aspect-[3/4] overflow-hidden rounded-t-lg">
                       <Image
-                        src={`http://localhost:3333/uploads/outfits/${item.images[0]}`}
+                        src={`http://localhost:3333/uploads/outfits/${item.images?.[0]}`}
                         alt={item.name || item.title}
                         className="object-cover w-full h-full transition-transform group-hover:scale-105"
                         width={300}
                         height={400}
                       />
                     </div>
-                    <div className="p-4">
-                      <h3 className="font-semibold mb-1">{item.name || item.title}</h3>
-                      <p className="text-sm text-gray-500 mb-2">{item.designer || item.brand || 'Designer'}</p>
-                      <div className="flex justify-between items-center">
-                        <p className="font-bold">₹{item.rentalPrice || item.price}/day</p>
-                        <Button size="sm" onClick={() => router.push(`user/outfit/${item._id}`)}>
-                          Rent Now
+                    <div className="p-3 sm:p-4">
+                      <h3 className="font-semibold mb-1 text-sm sm:text-base line-clamp-1">{item.name || item.title}</h3>
+                      <div className="flex justify-between items-center gap-2">
+                        <p className="font-bold text-sm sm:text-base">₹{item.rentalPrice || item.price}/day</p>
+                        <Button size="sm" className="text-xs sm:text-sm" onClick={() => router.push(`/user/outfit/${item._id}`)}>
+                          Rent
                         </Button>
                       </div>
                     </div>
@@ -187,25 +170,68 @@ export default function Home() {
                 </Card>
               ))}
             </div>
-            <Button variant="ghost" className="w-full mt-6 md:hidden">
-              View All <ArrowRight className="ml-2 h-4 w-4" />
-            </Button>
+          </div>
+        </section>
+
+        {/* New Arrivals Section */}
+        <section id="new-arrivals" className="w-full py-8 sm:py-12 md:py-16 lg:py-20">
+          <div className="container px-4 md:px-6">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-8 sm:mb-12 gap-4">
+              <h2 className="text-2xl sm:text-3xl font-bold tracking-tighter">New Arrivals</h2>
+            </div>
+
+            {loadingNew ? (
+              <div className="flex justify-center items-center py-12">
+                <p className="text-gray-500">Loading new arrivals...</p>
+              </div>
+            ) : errorNew ? (
+              <div className="flex justify-center items-center py-12">
+                <p className="text-red-500">Failed to load new arrivals.</p>
+              </div>
+            ) : null}
+
+            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+              {newArrivals.map((item, index) => (
+                <Card key={item._id || index} className="group">
+                  <CardContent className="p-0">
+                    <div className="relative aspect-[3/4] overflow-hidden rounded-t-lg">
+                      <Image
+                        src={`http://localhost:3333/uploads/outfits/${item.images?.[0]}`}
+                        alt={item.name || item.title}
+                        className="object-cover w-full h-full transition-transform group-hover:scale-105"
+                        width={300}
+                        height={400}
+                      />
+                    </div>
+                    <div className="p-3 sm:p-4">
+                      <h3 className="font-semibold mb-1 text-sm sm:text-base line-clamp-1">{item.name || item.title}</h3>
+                      <div className="flex justify-between items-center gap-2">
+                        <p className="font-bold text-sm sm:text-base">₹{item.rentalPrice || item.price}/day</p>
+                        <Button size="sm" className="text-xs sm:text-sm" onClick={() => router.push(`/user/outfit/${item._id}`)}>
+                          Rent
+                        </Button>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
           </div>
         </section>
 
         {/* CTA Section */}
-        <section className="w-full py-12 md:py-24 lg:py-32 bg-black text-white">
+        <section className="w-full py-8 sm:py-12 md:py-24 lg:py-32 bg-black text-white">
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center space-y-4 text-center">
               <div className="space-y-2">
-                <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
+                <h2 className="text-2xl sm:text-3xl font-bold tracking-tighter md:text-4xl lg:text-5xl px-4">
                   Ready to Rent Your Dream Outfit?
                 </h2>
-                <p className="mx-auto max-w-[600px] text-gray-200 md:text-xl">
+                <p className="mx-auto max-w-[600px] text-gray-200 text-sm sm:text-base md:text-xl px-4">
                   Join thousands of satisfied customers who trust us for their special occasions.
                 </p>
               </div>
-              <Button className="bg-white text-black hover:bg-gray-200" size="lg">
+              <Button className="bg-white text-black hover:bg-gray-200 w-full sm:w-auto mx-4" size="lg">
                 Get Started Today
               </Button>
             </div>
@@ -216,10 +242,10 @@ export default function Home() {
       {/* Footer */}
       <footer className="w-full py-6 bg-gray-100">
         <div className="container px-4 md:px-6">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8">
             <div className="space-y-3">
-              <h4 className="font-semibold">Categories</h4>
-              <ul className="space-y-2 text-sm">
+              <h4 className="font-semibold text-sm sm:text-base">Categories</h4>
+              <ul className="space-y-2 text-xs sm:text-sm">
                 <li>
                   <Link href="#" className="hover:underline">
                     Sarees
@@ -243,8 +269,8 @@ export default function Home() {
               </ul>
             </div>
             <div className="space-y-3">
-              <h4 className="font-semibold">Help</h4>
-              <ul className="space-y-2 text-sm">
+              <h4 className="font-semibold text-sm sm:text-base">Help</h4>
+              <ul className="space-y-2 text-xs sm:text-sm">
                 <li>
                   <Link href="#" className="hover:underline">
                     How It Works
@@ -268,8 +294,8 @@ export default function Home() {
               </ul>
             </div>
             <div className="space-y-3">
-              <h4 className="font-semibold">About</h4>
-              <ul className="space-y-2 text-sm">
+              <h4 className="font-semibold text-sm sm:text-base">About</h4>
+              <ul className="space-y-2 text-xs sm:text-sm">
                 <li>
                   <Link href="#" className="hover:underline">
                     Our Story
@@ -293,8 +319,8 @@ export default function Home() {
               </ul>
             </div>
             <div className="space-y-3">
-              <h4 className="font-semibold">Legal</h4>
-              <ul className="space-y-2 text-sm">
+              <h4 className="font-semibold text-sm sm:text-base">Legal</h4>
+              <ul className="space-y-2 text-xs sm:text-sm">
                 <li>
                   <Link href="#" className="hover:underline">
                     Privacy Policy
@@ -313,7 +339,7 @@ export default function Home() {
               </ul>
             </div>
           </div>
-          <div className="mt-8 pt-8 border-t text-center text-sm text-gray-500">
+          <div className="mt-6 sm:mt-8 pt-6 sm:pt-8 border-t text-center text-xs sm:text-sm text-gray-500">
             © {new Date().getFullYear()} Suramya Bespoke. All rights reserved.
           </div>
         </div>
@@ -321,25 +347,6 @@ export default function Home() {
     </div>
   )
 }
-
-const categories = [
-  {
-    name: "Sarees",
-    image: "/placeholder.svg?height=400&width=300",
-  },
-  {
-    name: "Dresses",
-    image: "/placeholder.svg?height=400&width=300",
-  },
-  {
-    name: "Jewellery",
-    image: "/placeholder.svg?height=400&width=300",
-  },
-  {
-    name: "Kurtas",
-    image: "/placeholder.svg?height=400&width=300",
-  },
-]
 
 const steps = [
   {
@@ -356,32 +363,5 @@ const steps = [
     title: "Return With Ease",
     description: "Return the outfit in the provided packaging.",
     icon: RefreshCw,
-  },
-]
-
-const popularItems = [
-  {
-    name: "Banarasi Silk Saree",
-    designer: "By Sabyasachi",
-    rentalPrice: "2999",
-    image: "/placeholder.svg?height=400&width=300",
-  },
-  {
-    name: "Designer Anarkali",
-    designer: "By Manish Malhotra",
-    rentalPrice: "3499",
-    image: "/placeholder.svg?height=400&width=300",
-  },
-  {
-    name: "Kundan Bridal Set",
-    designer: "By Tanishq",
-    rentalPrice: "4999",
-    image: "/placeholder.svg?height=400&width=300",
-  },
-  {
-    name: "Embroidered Lehenga",
-    designer: "By Anita Dongre",
-    rentalPrice: "5999",
-    image: "/placeholder.svg?height=400&width=300",
   },
 ]

@@ -70,4 +70,9 @@ export class UserController {
   async getNewArrivals() {
     return this.userService.getNewArrivals();
   }
+
+  @Get('popularoutfits')
+  async getPopularOutfits() {
+    return this.userService.getPopularOutfits();
+  }
 }

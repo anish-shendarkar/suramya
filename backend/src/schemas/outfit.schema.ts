@@ -18,9 +18,7 @@ export class Outfit {
     })
     type: string;
 
-    @Prop({
-        required: true,
-    })
+    @Prop({})
     size: string;
 
     @Prop({
@@ -50,6 +48,9 @@ export class Outfit {
 
     @Prop({ type: [String], required: true })
     images: string[];
+
+    @Prop({ type: Number, default: 0 })
+    views: number;
 
     @Prop({
         default: Date.now,

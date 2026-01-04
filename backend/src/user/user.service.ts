@@ -14,7 +14,12 @@ export class UserService {
     ) { }
 
     async getOutfitById(outfitId: string) {
-        return await this.outfitModel.findById(outfitId);
+        const outfit = await this.outfitModel.findByIdAndUpdate(
+            outfitId,
+            { $inc: { views: 1 } },
+            { new: true }
+        );
+        return outfit;
     }
 
     async getOutfitByGenderMale() {
@@ -63,6 +68,8 @@ export class UserService {
             $or: [
                 { name: { $regex: query, $options: 'i' } },
                 { description: { $regex: query, $options: 'i' } },
+                { color: { $regex: query, $options: 'i' } },
+                { type: { $regex: query, $options: 'i' } },
             ]
         });
         if (outfits.length === 0) {
@@ -86,9 +93,17 @@ export class UserService {
 
     //fetching new arrivals
     async getNewArrivals() {
-        const outfits = await this.outfitModel.find().sort({ createdAt: -1 }).limit(5);
+        const outfits = await this.outfitModel.find().sort({ createdAt: -1 }).limit(4);
         if (outfits.length === 0) {
             return new BadRequestException('No new arrivals found');
+        }
+        return outfits;
+    }
+
+    async getPopularOutfits() {
+        const outfits = await this.outfitModel.find().sort({ views: -1 }).limit(4);
+        if (outfits.length === 0) {
+            return new BadRequestException('No popular outfits found');
         }
         return outfits;
     }
