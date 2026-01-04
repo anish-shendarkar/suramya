@@ -19,7 +19,7 @@ import { RoleGuard } from 'src/role.guard';
 
 @Controller('user')
 export class UserController {
-  constructor(private readonly userService: UserService) {}
+  constructor(private readonly userService: UserService) { }
 
   @Get()
   async userCheck() {
@@ -64,5 +64,10 @@ export class UserController {
   @Get('search/jewellery')
   async searchJewellery(@Query('query') query: string) {
     return this.userService.searchJewellery(query);
+  }
+
+  @Get('newarrivals')
+  async getNewArrivals() {
+    return this.userService.getNewArrivals();
   }
 }

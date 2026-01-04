@@ -83,4 +83,13 @@ export class UserService {
         }
         return jewelleryItems;
     }
+
+    //fetching new arrivals
+    async getNewArrivals() {
+        const outfits = await this.outfitModel.find().sort({ createdAt: -1 }).limit(5);
+        if (outfits.length === 0) {
+            return new BadRequestException('No new arrivals found');
+        }
+        return outfits;
+    }
 }
