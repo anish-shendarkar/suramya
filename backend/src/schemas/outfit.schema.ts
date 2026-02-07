@@ -39,11 +39,6 @@ export class Outfit {
     @Prop({
         required: true,
     })
-    deposit: number;
-
-    @Prop({
-        required: true,
-    })
     coverImage: string;
 
     @Prop({ type: [String], required: true })

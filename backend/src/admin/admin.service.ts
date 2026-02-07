@@ -48,7 +48,6 @@ export class AdminService {
       color: body.color.toLowerCase(),
       gender: body.gender.toLowerCase(),
       price: body.price,
-      deposit: body.deposit,
       coverImage,
       images,
     });
