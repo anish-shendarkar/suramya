@@ -153,18 +153,6 @@ function createOutfit() {
                         />
                     </div>
                     <div className="mb-4">
-                        <label className="block text-sm font-medium mb-2">Deposit</label>
-                        <input
-                            type="number"
-                            name="deposit"
-                            className="w-full p-2 border border-gray-300 rounded"
-                            placeholder="Enter price"
-                            value={deposit}
-                            onChange={(e) => setDeposit(e.target.value)}
-                            required
-                        />
-                    </div>
-                    <div className="mb-4">
                         <label htmlFor="file" className="block text-sm font-medium mb-2">Images</label>
                         <input
                             id="file"

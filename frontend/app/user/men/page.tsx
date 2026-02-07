@@ -121,7 +121,7 @@ export default function CategoryPage() {
                             >
                                 <div className="relative w-full aspect-[3/4] mb-2">
                                     <Image
-                                        src={`http://localhost:3333/uploads/outfits/${outfit.images[0]}`}
+                                        src={outfit.coverImage}
                                         alt={outfit.name}
                                         fill
                                         className="object-cover rounded-md"

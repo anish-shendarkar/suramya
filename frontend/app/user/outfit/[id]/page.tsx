@@ -25,6 +25,7 @@ export default function OutfitViewer() {
         gender: string
         price: number
         deposit: number
+        coverImage: string
 
         images: string[]
     }
@@ -48,7 +49,7 @@ export default function OutfitViewer() {
                 const data = await response.json();
                 console.log('Fetched outfit data:', data);
                 setOutfit(data);
-                setSelectedImage(data.images[0]);
+                setSelectedImage(data.coverImage);
             }
             catch (error) {
                 console.error('Error:', error);
@@ -70,7 +71,7 @@ export default function OutfitViewer() {
                 <div className="space-y-4">
                     <div className="aspect-square relative overflow-hidden rounded-lg border">
                         <Image
-                            src={`http://localhost:3333/uploads/outfits/${selectedImage}`}
+                            src={selectedImage || outfit.coverImage}
                             alt={outfit?.name || "Outfit Image"}
                             className="object-cover"
                             fill
@@ -78,13 +79,13 @@ export default function OutfitViewer() {
                         />
                     </div>
                     <div className="grid grid-cols-4 gap-4">
-                        {outfit.images.map((imgName, i) => (
-                            <button onClick={ () => { setSelectedImage(imgName) }}
+                        {outfit.images.map((img, i) => (
+                            <button onClick={ () => { setSelectedImage(img) }}
                                 key={i}
-                                className={`aspect-square relative overflow-hidden rounded-lg border hover:border-primary transition-colors ${selectedImage === imgName ? 'border-primary' : 'border-transparent'}`}
+                                className={`aspect-square relative overflow-hidden rounded-lg border hover:border-primary transition-colors ${selectedImage === img ? 'border-primary' : 'border-transparent'}`}
                             >
                                 <Image
-                                    src={`http://localhost:3333/uploads/outfits/${imgName}`}
+                                    src={img}
                                     alt={`Item ${i}`}
                                     className="object-cover"
                                     fill
@@ -104,8 +105,7 @@ export default function OutfitViewer() {
                     </div>
 
                     <div className="space-y-2">
-                        <h2 className="font-semibold text-xl">{outfit?.price}</h2>
-                        <p className="text-sm text-muted-foreground">Security deposit: {outfit?.deposit} (refundable)</p>
+                        <h2 className="font-semibold text-xl">₹ {outfit?.price}</h2>
                     </div>
 
                     <Separator />
@@ -123,6 +123,8 @@ export default function OutfitViewer() {
                             <dl className="flex items-center gap-2 text-sm">
                                 <dt className="text-muted-foreground">Color:</dt>
                                 <dd className="capitalize">{outfit?.color}</dd>
+                                <dt className="text-muted-foreground">Size:</dt>
+                                <dd className="capitalize">{outfit?.size}</dd>
                             </dl>
                         </div>
 

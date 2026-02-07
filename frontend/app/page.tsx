@@ -74,33 +74,50 @@ export default function Home() {
       <Navbar />
       <main className="flex-1">
         {/* Hero Section */}
-        <section className="w-full py-8 sm:py-12 md:py-24 lg:py-32 xl:py-48 bg-gradient-to-b from-rose-300/30 via-purple-300/20 to-white">
+        <section className="relative w-full min-h-screen flex items-center py-8 sm:py-12 md:py-24 lg:py-32 xl:py-48">
+
+          {/* Background Image */}
+          <div className="absolute inset-0 -z-10">
+            <img
+              src="/hero.jpeg"
+              alt="Designer wear background"
+              className="w-full h-full object-cover"
+            />
+          </div>
+
           <div className="container px-4 md:px-6">
-            <div className="flex flex-col items-center space-y-4 text-center">
-              <div className="space-y-2">
-                <h1 className="p-2 text-2xl sm:text-3xl font-bold tracking-tighter md:text-4xl lg:text-5xl xl:text-6xl/none animate-fade-in-up">
+            <div className="flex flex-col items-end text-right space-y-6 ml-auto">
+
+              <div className="max-w-[600px]">
+                <h1 className="text-white text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight">
                   Rent Designer Wear for Your Special Moments
                 </h1>
-                <p className="mx-auto max-w-[700px] text-gray-500 text-sm sm:text-base md:text-xl px-4">
-                  Premium collection of traditional and contemporary wear. Rent authentic designer pieces at a fraction
-                  of the cost.
+
+                <p className="text-gray-200 text-sm sm:text-base md:text-lg mt-3">
+                  Premium collection of traditional and contemporary wear. Rent authentic designer
+                  pieces at a fraction of the cost.
                 </p>
               </div>
-              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full sm:w-auto px-4">
-                <a href="#new-arrivals" className="w-full sm:w-auto">
-                  <Button className="w-full sm:w-auto bg-white text-black hover:text-white hover:bg-black border-2 border-transparent transition-all duration-300 hover:border-rose-300 hover:shadow-purple-400" size="lg">
+
+              <div className="flex gap-4">
+                <a href="#new-arrivals">
+                  <Button className="bg-white text-black hover:bg-black hover:text-white border">
                     Browse Collection
                   </Button>
                 </a>
-                <a href="#how-it-works" className="w-full sm:w-auto">
-                  <Button className="w-full sm:w-auto border-2 border-transparent transition-all duration-300 hover:border-rose-300 hover:shadow-purple-400" size="lg">
+
+                <a href="#how-it-works">
+                  <Button className="bg-black/60 text-white hover:bg-black border border-white/30">
                     How It Works
                   </Button>
                 </a>
               </div>
+
             </div>
           </div>
+
         </section>
+
 
         {/* Categories Section */}
         <section className="w-full py-8 sm:py-12 md:py-24 lg:py-32">
@@ -150,7 +167,7 @@ export default function Home() {
                   <CardContent className="p-0">
                     <div className="relative aspect-[3/4] overflow-hidden rounded-t-lg">
                       <Image
-                        src={`http://localhost:3333/uploads/outfits/${item.images?.[0]}`}
+                        src={item.coverImage}
                         alt={item.name || item.title}
                         className="object-cover w-full h-full transition-transform group-hover:scale-105"
                         width={300}
@@ -196,7 +213,7 @@ export default function Home() {
                   <CardContent className="p-0">
                     <div className="relative aspect-[3/4] overflow-hidden rounded-t-lg">
                       <Image
-                        src={`http://localhost:3333/uploads/outfits/${item.images?.[0]}`}
+                        src={item.coverImage}
                         alt={item.name || item.title}
                         className="object-cover w-full h-full transition-transform group-hover:scale-105"
                         width={300}

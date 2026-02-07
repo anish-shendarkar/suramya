@@ -10,11 +10,11 @@ function Navbar() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     return (
-        <nav className="bg-white dark:bg-gray-900 fixed w-full z-20 top-0 start-0 border-b border-gray-200 dark:border-gray-600">
-            <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+        <nav className="fixed top-0 left-0 w-full z-[50] bg-transparent backdrop-blur-sm border-b border-white/10">
+            <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-3">
                 {/* Logo */}
                 <a href="/" className="flex items-center space-x-3 rtl:space-x-reverse">
-                    <img src="/suramya_logo.jpg" className="h-8" alt="Suramya Logo" />
+                    <img src="/suramya_logo.png" className="h-10" alt="Suramya Logo" />
                     <span className="self-center text-2xl font-extrabold whitespace-nowrap dark:text-white text-transparent bg-clip-text bg-gradient-to-r from-rose-300 to-purple-400 to-90%">Suramya</span>
                 </a>
                 <button
@@ -111,17 +111,17 @@ function Navbar() {
                 </div>
             </div>
             {isMenuOpen && (
-            <div className="md:hidden py-4 px-2 border-t">
-              <nav className="flex flex-col space-y-4">
-                <Link href="/" className="text-sm font-medium hover:text-primary transition-colors" onClick={() => setIsMenuOpen(false)}>Home</Link>
-                <Link href="/user/about" className="text-sm font-medium hover:text-primary transition-colors" onClick={() => setIsMenuOpen(false)}>About</Link>
-                <Link href="/user/women" className="text-sm font-medium hover:text-primary transition-colors" onClick={() => setIsMenuOpen(false)}>Women</Link>
-                <Link href="/user/men" className="text-sm font-medium hover:text-primary transition-colors" onClick={() => setIsMenuOpen(false)}>Mens</Link>
-                <Link href="/user/jewellery" className="text-sm font-medium hover:text-primary transition-colors" onClick={() => setIsMenuOpen(false)}>Jewellery</Link>
-                <Link href="/user/contact" className="text-sm font-medium hover:text-primary transition-colors" onClick={() => setIsMenuOpen(false)}>Contact</Link>
-              </nav>
-            </div>
-          )}
+                <div className="md:hidden py-4 px-2 border-t">
+                    <nav className="flex flex-col space-y-4">
+                        <Link href="/" className="text-sm font-medium hover:text-primary transition-colors" onClick={() => setIsMenuOpen(false)}>Home</Link>
+                        <Link href="/user/about" className="text-sm font-medium hover:text-primary transition-colors" onClick={() => setIsMenuOpen(false)}>About</Link>
+                        <Link href="/user/women" className="text-sm font-medium hover:text-primary transition-colors" onClick={() => setIsMenuOpen(false)}>Women</Link>
+                        <Link href="/user/men" className="text-sm font-medium hover:text-primary transition-colors" onClick={() => setIsMenuOpen(false)}>Mens</Link>
+                        <Link href="/user/jewellery" className="text-sm font-medium hover:text-primary transition-colors" onClick={() => setIsMenuOpen(false)}>Jewellery</Link>
+                        <Link href="/user/contact" className="text-sm font-medium hover:text-primary transition-colors" onClick={() => setIsMenuOpen(false)}>Contact</Link>
+                    </nav>
+                </div>
+            )}
         </nav>
     );
 }
