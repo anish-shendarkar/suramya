@@ -2,7 +2,7 @@
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
-import { Search, Menu, X } from "lucide-react";
+import { Search, Menu, X, ChevronRight, ChevronLeft } from "lucide-react";
 import { MensCategorySidebar } from "@/components/MensSidebar";
 import OutfitSearchBar from "@/components/OutfitSearchBar";
 
@@ -10,24 +10,35 @@ export default function CategoryPage() {
     const [loading, setLoading] = useState(true);
     const [outfits, setOutfits] = useState<any[]>([]);
     const [sidebarOpen, setSidebarOpen] = useState(false);
+    const [pagination, setPagination] = useState<any>(null);
+    const [currentPage, setCurrentPage] = useState(1);
     const router = useRouter();
     const { category } = useParams();
     const [activeCategory, setActiveCategory] = useState<string | null>(null);
 
     useEffect(() => {
-        const fetchOutfits = async () => {
-            try {
-                const response = await fetch(`http://localhost:3333/user/outfits/male`);
-                const data = await response.json();
-                setOutfits(data);
-            } catch (err) {
-                console.error(err);
-            } finally {
-                setLoading(false);
+        fetchOutfits(currentPage);
+    }, [category, currentPage]);
+
+    const fetchOutfits = async (page: number) => {
+        try {
+            const response = await fetch(`http://localhost:3333/user/outfits/male?page=${page}&limit=12`, {
+                method: "GET",
+            });
+            if (!response.ok) {
+                throw new Error("Failed to fetch outfits");
             }
-        };
-        fetchOutfits();
-    }, [category]);
+            const data = await response.json();
+            setOutfits(data.data || []);
+            setPagination(data.pagination || null);
+            console.log("pagination info", data.pagination);
+        } catch (err) {
+            console.error(err);
+            setOutfits([]);
+        } finally {
+            setLoading(false);
+        }
+    };
 
     const categories = useMemo(() => {
         return Array.from(new Set(outfits.map((outfit) => outfit.type)));
@@ -41,6 +52,11 @@ export default function CategoryPage() {
         setActiveCategory(cat);
         setSidebarOpen(false); // Close sidebar on mobile after selection
     };
+    const handlePageChange = (newPage: number) => {
+        setCurrentPage(newPage);
+        setActiveCategory(null); // Reset category filter when changing page
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    }
 
     if (loading) {
         return <p className="p-6">Loading...</p>;
@@ -147,6 +163,48 @@ export default function CategoryPage() {
                         </div>
                     )}
                 </div>
+                {/* Pagination Controls */}
+                {pagination && pagination.totalPages > 1 && (
+                    <div className="mt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+                        {/* Page info */}
+                        <div className="text-sm text-gray-600">
+                            Page {pagination.currentPage} of {pagination.totalPages}
+                        </div>
+
+                        {/* Pagination buttons */}
+                        <div className="flex items-center gap-2">
+                            <button
+                                onClick={() => handlePageChange(currentPage - 1)}
+                                disabled={!pagination.hasPrevPage}
+                                className={`
+                                    flex items-center gap-1 px-4 py-2 rounded-lg font-medium transition-colors
+                                    ${pagination.hasPrevPage
+                                        ? "bg-rose-600 text-white hover:bg-rose-700"
+                                        : "bg-gray-200 text-gray-400 cursor-not-allowed"
+                                    }
+                                `}
+                            >
+                                <ChevronLeft size={20} />
+                                Previous
+                            </button>
+
+                            <button
+                                onClick={() => handlePageChange(currentPage + 1)}
+                                disabled={!pagination.hasNextPage}
+                                className={`
+                                    flex items-center gap-1 px-4 py-2 rounded-lg font-medium transition-colors
+                                    ${pagination.hasNextPage
+                                        ? "bg-rose-600 text-white hover:bg-rose-700"
+                                        : "bg-gray-200 text-gray-400 cursor-not-allowed"
+                                    }
+                                `}
+                            >
+                                Next
+                                <ChevronRight size={20} />
+                            </button>
+                        </div>
+                    </div>
+                )}
             </main>
         </div>
     );

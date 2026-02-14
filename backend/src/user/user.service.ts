@@ -25,12 +25,31 @@ export class UserService {
         return outfit;
     }
 
-    async getOutfitByGenderMale() {
-        const outfit = await this.outfitModel.find({ gender: 'male' });
-        if (outfit.length === 0) {
+    async getOutfitByGenderMale(page: number = 1, limit: number = 10) {
+        const skip = (page - 1) * limit;
+        const outfits = await this.outfitModel
+            .find({ gender: 'male' })
+            .skip(skip)
+            .limit(limit)
+            .sort({ createdAt: -1 })
+            .exec();
+        
+        const totalOutfits = await this.outfitModel.countDocuments({ gender: 'male' });
+
+        if (outfits.length === 0 && page === 1) {
             throw new BadRequestException('Outfit not found');
         }
-        return outfit;
+        return {
+            data: outfits,
+            pagination: {
+                currentPage: page,
+                totalPages: Math.ceil(totalOutfits / limit),
+                totalItems: totalOutfits,
+                itemsPerPage: limit,
+                hasNextPage: page < Math.ceil(totalOutfits / limit),
+                hasPrevPage: page > 1,
+            },
+        };
     }
 
     async getOutfitByGenderFemale(page: number = 1, limit: number = 10) {

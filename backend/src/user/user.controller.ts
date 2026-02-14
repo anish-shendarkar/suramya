@@ -32,8 +32,13 @@ export class UserController {
   }
 
   @Get('outfits/male')
-  async getOutfitByGenderMale() {
-    return this.userService.getOutfitByGenderMale();
+  async getOutfitByGenderMale(
+    @Query('page') page: string = '1',
+    @Query('limit') limit: string = '10'
+  ) {
+    const pageNum = parseInt(page, 10);
+    const limitNum = parseInt(limit, 10);
+    return this.userService.getOutfitByGenderMale(pageNum, limitNum);
   }
 
   @Get('outfits/female')
