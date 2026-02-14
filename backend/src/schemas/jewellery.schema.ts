@@ -31,11 +31,6 @@ export class Jewellery {
     @Prop({
         required: true,
     })
-    deposit: number;
-
-    @Prop({
-        required: true,
-    })
     coverImage: string;
 
     @Prop({ type: [String], required: true })

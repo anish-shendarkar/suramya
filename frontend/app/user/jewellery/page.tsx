@@ -8,43 +8,47 @@ import { Search } from "lucide-react";
 export default function CategoryPage() {
     const [loading, setLoading] = useState(true);
     const [jewellery, setJewellery] = useState<any[]>([]);
+    const [pagination, setPagination] = useState<any>(null);
+    const [currentPage, setCurrentPage] = useState(1);
     const router = useRouter();
     const { category } = useParams();
 
     useEffect(() => {
-        const fetchJewellery = async() => {
-            try {
-                const response = await fetch(`http://localhost:3333/user/alljewellery`, {
-                    method: "GET",
-                });
-                if(!response.ok) {
-                    throw new Error("Failed to fetch Jewellery");
-                }
-                const data = await response.json();
-                setJewellery(data);
-            } catch(err) {
-                console.error("Failed to fetch jewellery", err);
-            } finally {
-                setLoading(false);
-            }
-        };
-      fetchJewellery();
-    }, [category]);
+        fetchJewellery(currentPage);
+    }, [category, currentPage]);
 
-    const handleOnClick = (id:string) => {
+    const fetchJewellery = async (page: number) => {
+        try {
+            const response = await fetch(`http://localhost:3333/user/alljewellery?page=${page}&limit=10`, {
+                method: "GET",
+            });
+            if (!response.ok) {
+                throw new Error("Failed to fetch Jewellery");
+            }
+            const data = await response.json();
+            setJewellery(data.data || []);
+            setPagination(data.pagination || null);
+        } catch (err) {
+            console.error("Failed to fetch jewellery", err);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const handleOnClick = (id: string) => {
         router.push(`/jewellery/${id}`);
     }
 
     return (
-        <div className="container mt-16 mx-auto p-6">
+        <div className="container mx-auto p-6">
             <h1 className="text-3xl font-bold mb-6 capitalize">Jewellery Collection</h1>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {jewellery.length > 0 ? (
                     jewellery.map((jewellery) => (
                         <div onClick={() => handleOnClick(jewellery._id)} key={jewellery?._id} className="rounded-lg p-4 shadow-md border-2 border-transparent transition-all duration-300 hover:border-rose-300 hover:shadow-purple-400 cursor-pointer">
-                            
+
                             <Image
-                                src={ `http://localhost:3333/uploads/jewellery/${jewellery.images[0]}`}
+                                src={jewellery.coverImage}
                                 alt={jewellery?.name || "Outfit Image"}
                                 className="object-cover w-full h-64"
                                 width={300}

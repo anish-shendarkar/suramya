@@ -95,12 +95,23 @@ export class UserService {
         return jewellaryItem;
     }
 
-    async getAllJewelleryItems() {
-        const jewelleryItems = await this.jewellaryModel.find();
-        if (jewelleryItems.length === 0) {
+    async getAllJewelleryItems(page: number = 1, limit: number = 10) {
+        const skip = (page - 1) * limit;
+        const jewelleryItems = await this.jewellaryModel.find().skip(skip).limit(limit).sort({ createdAt: -1 }).exec();
+        if (jewelleryItems.length === 0 && page === 1) {
             throw new BadRequestException('Jewellery not found');
         }
-        return jewelleryItems;
+        return {
+            data: jewelleryItems,
+            pagination: {
+                currentPage: page,
+                totalPages: Math.ceil(jewelleryItems.length / limit),
+                totalItems: jewelleryItems.length,
+                itemsPerPage: limit,
+                hasNextPage: page < Math.ceil(jewelleryItems.length / limit),
+                hasPrevPage: page > 1,
+            },
+        };
     }
 
     //search functionality

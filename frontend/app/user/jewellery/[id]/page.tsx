@@ -21,12 +21,12 @@ export default function JewelleryViewer() {
         type: string
         color: string
         price: number
-        deposit: number
 
         images: string[]
     }
 
     const [jewellery, setJewellery] = useState<Jewellery | null>(null);
+    const [selectedImage, setSelectedImage] = useState<string | null>(null);
     const { id } = useParams() as { id: string }
     const token = Cookies.get('token')
     const router = useRouter()
@@ -43,6 +43,7 @@ export default function JewelleryViewer() {
 
                 const data = await response.json();
                 setJewellery(data);
+                setSelectedImage(data.coverImage);
             }
             catch (error) {
                 console.error('Error:', error);
@@ -65,7 +66,7 @@ export default function JewelleryViewer() {
                 <div className="space-y-4">
                     <div className="aspect-square relative overflow-hidden rounded-lg border">
                         <Image
-                            src={`http://localhost:3333/uploads/jewellery/${jewellery.images[0]}` || "/placeholder.svg"}
+                            src={selectedImage || "/placeholder.svg"}
                             alt={jewellery?.name || "jewellery Image"}
                             className="object-cover"
                             fill
@@ -77,9 +78,10 @@ export default function JewelleryViewer() {
                             <button
                                 key={i}
                                 className="aspect-square relative overflow-hidden rounded-lg border hover:border-primary transition-colors"
+                                onClick={() => setSelectedImage(imgName)}
                             >
                                 <Image
-                                    src={`http://localhost:3333/uploads/jewellery/${imgName}`}
+                                    src={imgName}
                                     alt={`Item ${i}`}
                                     className="object-cover"
                                     fill
@@ -100,7 +102,7 @@ export default function JewelleryViewer() {
 
                     <div className="space-y-2">
                         <h2 className="font-semibold text-xl">{jewellery?.price}</h2>
-                        <p className="text-sm text-muted-foreground">Security deposit: {jewellery?.deposit} (refundable)</p>
+                        <p className="text-sm text-muted-foreground">Security deposit: (refundable)</p>
                     </div>
 
                     <Separator />

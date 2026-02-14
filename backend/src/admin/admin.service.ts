@@ -88,12 +88,11 @@ export class AdminService {
 
   async createJewelleryItem(user: User, body, coverImage: string, images: string[]) {
     const jewelleryItem = new this.jewelleryModel({
-      name: body.name,
-      description: body.description,
-      type: body.type,
-      color: body.color,
+      name: body.name.toLowerCase(),
+      description: body.description.toLowerCase(),
+      type: body.type.toLowerCase(),
+      color: body.color.toLowerCase(),
       price: body.price,
-      deposit: body.deposit,
       coverImage,
       images,
     });

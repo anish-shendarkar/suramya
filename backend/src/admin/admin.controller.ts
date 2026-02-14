@@ -51,7 +51,7 @@ export class AdminController {
             (err, result) => {
               if (err) {
                 reject(err);
-              } else if(result?.secure_url) {
+              } else if (result?.secure_url) {
                 resolve(result.secure_url)
               }
               else {
@@ -100,31 +100,37 @@ export class AdminController {
 
   @Post('createjewelleryitem')
   @UseInterceptors(
-    FilesInterceptor('images', 10, {
-      storage: diskStorage({
-        destination: (req, file, cb) => {
-          const uploadPath = 'uploads/jewellery';
-          if (!fs.existsSync(uploadPath)) {
-            fs.mkdirSync(uploadPath, { recursive: true });
-          }
-          cb(null, uploadPath);
-        },
-        filename: (req, file, cb) => {
-          const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
-          cb(null, uniqueSuffix + path.extname(file.originalname));
-        },
-      }),
-    })
+    FilesInterceptor('images', 10) // memory storage by default
   )
   async createJewelleryItem(@Body() body, @UploadedFiles() files: Array<Express.Multer.File>, @Request() req) {
-    const imagePaths = files.map(file => file.filename);
-    const coverImage = imagePaths.length > 0 ? imagePaths[0] : null;
+    const uploadedImages = await Promise.all(
+      files.map((file) => {
+        return new Promise<string>((resolve, reject) => {
+          cloudinary.uploader.upload_stream(
+            { folder: 'suramya/jewellery' },
+            (err, result) => {
+              if (err) {
+                reject(err);
+              } else if (result?.secure_url) {
+                resolve(result.secure_url)
+              }
+              else {
+                reject(new Error('No secure_url returned from Cloudinary'));
+              } // store only URL
+            }
+          ).end(file.buffer);
+        });
+      })
+    );
+
+    const coverImage = uploadedImages.length > 0 ? uploadedImages[0] : null;
+    console.log('create jewellery item hit', Date.now())
 
     return this.adminService.createJewelleryItem(
       req.user.user,
       body,
       coverImage,
-      imagePaths,
+      uploadedImages
     );
   }
 
