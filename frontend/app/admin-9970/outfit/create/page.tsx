@@ -17,6 +17,7 @@ function createOutfit() {
     const [gender, setGender] = useState("");
     const [price, setPrice] = useState("");
     const [deposit, setDeposit] = useState("");
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     const router = useRouter();
 
@@ -32,39 +33,46 @@ function createOutfit() {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        const token = Cookies.get("auth-token");
+        if (isSubmitting) return; // Prevent multiple submissions
+        setIsSubmitting(true);
 
-        const formData = new FormData();
-        formData.append("name", name);
-        formData.append("description", description);
-        formData.append("type", type);
-        formData.append("color", color);
-        formData.append("size", size);
-        formData.append("gender", gender);
-        formData.append("price", price);
-        formData.append("deposit", deposit);
-        files.forEach((file, index) => {
-            formData.append("images", file);
-        });
+        try {
+            const token = Cookies.get("auth-token");
 
-        const response = await fetch("http://localhost:3333/admin/createoutfit", {
-            method: "POST",
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-            body: formData,
-        });
+            const formData = new FormData();
+            formData.append("name", name);
+            formData.append("description", description);
+            formData.append("type", type);
+            formData.append("color", color);
+            formData.append("size", size);
+            formData.append("gender", gender);
+            formData.append("price", price);
+            formData.append("deposit", deposit);
+            files.forEach((file, index) => {
+                formData.append("images", file);
+            });
 
-        if (response.ok) {
-            alert("Outfit created successfully!");
-            router.push("/admin-9970/dashboard");
+            const response = await fetch("http://localhost:3333/admin/createoutfit", {
+                method: "POST",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+                body: formData,
+            });
 
-        } else {
-            const errorData = await response.json();
-            console.error("Error creating outfit:", errorData);
-            alert("Failed to create outfit. Please try again.");
+            if (response.ok) {
+                alert("Outfit created successfully!");
+                router.push("/admin-9970/dashboard");
+
+            } else {
+                const errorData = await response.json();
+                console.error("Error creating outfit:", errorData);
+                alert("Failed to create outfit. Please try again.");
+            }
+        } finally {
+            setIsSubmitting(false);
         }
-    }
+    };
     return (
         <div>
             <AdminNavbar />

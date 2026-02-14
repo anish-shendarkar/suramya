@@ -1,4 +1,3 @@
-// app/user/layout.tsx
 import Navbar from "@/components/Navbar";
 
 export default function UserLayout({
@@ -9,7 +8,7 @@ export default function UserLayout({
   return (
     <div className="min-h-screen">
       <Navbar />
-      <main>{children}</main>
+      <main className="pt-16">{children}</main>
     </div>
   );
 }

@@ -10,12 +10,12 @@ function Navbar() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     return (
-        <nav className="fixed top-0 left-0 w-full z-[50] bg-transparent backdrop-blur-sm border-b border-white/10">
-            <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-3">
+        <nav className="fixed w-full z-[50] backdrop-blur-md border-b border-white/10">
+            <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-3 text-rose-600">
                 {/* Logo */}
                 <a href="/" className="flex items-center space-x-3 rtl:space-x-reverse">
                     <img src="/suramya_logo.png" className="h-10" alt="Suramya Logo" />
-                    <span className="self-center text-2xl font-extrabold whitespace-nowrap dark:text-white text-transparent bg-clip-text bg-gradient-to-r from-rose-300 to-purple-400 to-90%">Suramya</span>
+                    <span className="self-center text-2xl font-extrabold whitespace-nowrap dark:text-white text-transparent bg-clip-text bg-gradient-to-r from-rose-600 to-purple-400 ">Suramya</span>
                 </a>
                 <button
                     onClick={() => setIsMenuOpen(!isMenuOpen)}
