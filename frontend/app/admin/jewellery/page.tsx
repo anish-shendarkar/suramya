@@ -7,55 +7,55 @@ import Cookies from 'js-cookie'
 import Image from 'next/image'
 import { Button } from '@/components/ui/button'
 
-function Outfit() {
-  const [outfits, setOutfits] = useState<any[]>([])
+function allJewellery() {
+  const [jewellery, setJewellery] = useState<any[]>([])
   const router = useRouter()
 
   useEffect(() => {
     const token = Cookies.get('auth-token');
     if (!token) {
       alert('You are not logged in. Please log in to access this page.')
-      router.push('/admin-9970/login')
+      router.push('/admin/login')
     }
-    // Fetch outfits from the API
-    const fetchAllOutfits = async () => {
+    // Fetch Jewellerys from the API
+    const fetchAllJewellery = async () => {
       try {
-        const response = await fetch('http://localhost:3333/admin/getoutfits', {
+        const response = await fetch('http://localhost:3333/admin/getjewelleryitems', {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${token}`
           }
         })
         if (!response.ok) {
-          throw new Error('Failed to fetch outfits')
+          throw new Error('Failed to fetch Jewellery')
         }
         const data = await response.json()
-        setOutfits(data)
+        setJewellery(data)
       } catch (error) {
-        console.error('Error fetching outfits:', error)
+        console.error('Error fetching Jewellery:', error)
       }
     };
-    fetchAllOutfits()
+    fetchAllJewellery()
   }, [])
 
-  const handleDeleteOutfit = async (outfitId: string) => {
+  const handleDeleteJewellery = async (jewelleryId: string) => {
     const token = Cookies.get('auth-token');
-    const confirmDelete = confirm('Are you sure you want to delete this outfit?')
+    const confirmDelete = confirm('Are you sure you want to delete this Jewellery?')
     if (confirmDelete) {
       try {
-        const response = await fetch(`http://localhost:3333/admin/deleteoutfit/${outfitId}`, {
+        const response = await fetch(`http://localhost:3333/admin/deleteJewellery/${jewelleryId}`, {
           method: 'DELETE',
           headers: {
             'Authorization': `Bearer ${token}`
           }
         })
         if (!response.ok) {
-          throw new Error('Failed to delete outfit')
+          throw new Error('Failed to delete Jewellery')
         }
-        // Remove the deleted outfit from the state
-        setOutfits(outfits.filter(outfit => outfit._id !== outfitId))
+        // Remove the deleted Jewellery from the state
+        setJewellery(jewellery.filter(jewellery => jewellery._id !== jewelleryId))
       } catch (error) {
-        console.error('Error deleting outfit:', error)
+        console.error('Error deleting Jewellery:', error)
       }
     }
   };
@@ -77,34 +77,34 @@ function Outfit() {
                 delaySpeed={1000}
               />
             </span>
-            {''}Outfits
+            {''}Jewellery
           </h2>
-          <button onClick={() => router.push(`outfit/create`)} className="px-4 py-2 rounded-md border border-neutral-300 bg-neutral-100 text-slate-700 text-sm hover:-translate-y-1 transform transition duration-200 hover:shadow-md">
-            Create New Outfit
+          <button onClick={() => router.push(`jewellery/create`)} className="px-4 py-2 rounded-md border border-neutral-300 bg-neutral-100 text-slate-700 text-sm hover:-translate-y-1 transform transition duration-200 hover:shadow-md">
+            Create New Jewellery
           </button>
         </div>
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4 p-8">
-          {outfits.length > 0 ? (
-            outfits.map((outfit) => (
-              <div key ={outfit._id} className="rounded-lg p-4 shadow-md border-2 border-transparent transition-all duration-300 hover:border-rose-300 hover:shadow-purple-400 cursor-pointer">
+          {jewellery.length > 0 ? (
+            jewellery.map((jewellery) => (
+              <div key ={jewellery._id} className="rounded-lg p-4 shadow-md border-2 border-transparent transition-all duration-300 hover:border-rose-300 hover:shadow-purple-400 cursor-pointer">
                 <Image
-                  src={outfit.coverImage}
-                  alt={outfit?.name || "Outfit Image"}
+                  src={`http://localhost:3333/uploads/jewellery/${jewellery.images[0]}`}
+                  alt={jewellery?.name || "Jewellery Image"}
                   className="object-cover w-full h-64"
                   width={300}
                   height={400}
                 />
-                <h2 className="text-xl font-semibold mt-2">{outfit?.name}</h2>
+                <h2 className="text-xl font-semibold mt-2">{jewellery?.name}</h2>
                 <Button
                   className="mt-2 bg-rose-400 text-white hover:bg-rose-500"
-                  onClick={() => router.push(`/admin-9970/outfit/edit/${outfit._id}`)}
+                  onClick={() => router.push(`/admin/jewellery/edit/${jewellery._id}`)}
                 >
                   Edit
                 </Button>
 
                 <Button
                   className="mx-2 mt-2 bg-red-500 text-white hover:bg-rose-700"
-                  onClick={() => { handleDeleteOutfit(outfit._id) }}>
+                  onClick={() => { handleDeleteJewellery(jewellery._id) }}>
                   Delete
                 </Button>
 
@@ -119,4 +119,4 @@ function Outfit() {
   )
 }
 
-export default Outfit
+export default allJewellery

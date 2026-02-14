@@ -14,7 +14,7 @@ function Navbar() {
     const handleLogout = () => {
         Cookies.remove("auth-token");
         alert("You have been logged out.");
-        router.push("/admin-9970/login");
+        router.push("/admin/login");
     };
 
     return (
@@ -35,13 +35,13 @@ function Navbar() {
                 <div className="items-center justify-between hidden w-full md:flex md:w-auto">
                     <ul className="flex space-x-6 ml-8 font-medium [&>li>a:hover]:text-rose-500 [&>li>a]:transition-all duration-300">
                         <li>
-                            <a href="/admin-9970/dashboard">Dashboard</a>
+                            <a href="/admin/dashboard">Dashboard</a>
                         </li>
                         <li className="group">
-                            <a href="/admin-9970/outfit">Outfits</a>   
+                            <a href="/admin/outfit">Outfits</a>   
                         </li>
                         <li className="group">
-                            <a href="/admin-9970/jewellery">Jewellery</a>
+                            <a href="/admin/jewellery">Jewellery</a>
                         </li>
                         <li>
                             <button
@@ -57,9 +57,9 @@ function Navbar() {
             {isMenuOpen && (
                 <div className="md:hidden py-4 px-2 border-t">
                     <nav className="flex flex-col space-y-4">
-                        <Link href="/admin-9970/dashboard" className="text-sm font-medium hover:text-primary transition-colors" onClick={() => setIsMenuOpen(false)}>Dashboard</Link>
-                        <Link href="/admin-9970/outfit" className="text-sm font-medium hover:text-primary transition-colors" onClick={() => setIsMenuOpen(false)}>Outfits</Link>
-                        <Link href="/admin-9970/jewellery" className="text-sm font-medium hover:text-primary transition-colors" onClick={() => setIsMenuOpen(false)}>Jewellery</Link>
+                        <Link href="/admin/dashboard" className="text-sm font-medium hover:text-primary transition-colors" onClick={() => setIsMenuOpen(false)}>Dashboard</Link>
+                        <Link href="/admin/outfit" className="text-sm font-medium hover:text-primary transition-colors" onClick={() => setIsMenuOpen(false)}>Outfits</Link>
+                        <Link href="/admin/jewellery" className="text-sm font-medium hover:text-primary transition-colors" onClick={() => setIsMenuOpen(false)}>Jewellery</Link>
                         <Link href="/" className="text-sm font-medium hover:text-primary transition-colors" onClick={() => setIsMenuOpen(false)}>Logout</Link>
                     </nav>
                 </div>

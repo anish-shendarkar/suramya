@@ -43,7 +43,6 @@ export function LoginForm() {
         router.push("/admin/dashboard");
       } else if (loginRole === "user") {
         router.push("/");
-        // router.push("/educator/profile");
       } else {
         console.log("User already logged in! but role is not defined");
       }

@@ -28,7 +28,7 @@ export default function LoginPage() {
         Cookies.set("auth-token", data.token, { expires: 7 });
 
         alert("Login successful!");
-        router.push("/admin-9970/dashboard"); // your admin dashboard
+        router.push("/admin/dashboard"); // your admin dashboard
       } else {
         alert(data.message || "Login failed.");
       }

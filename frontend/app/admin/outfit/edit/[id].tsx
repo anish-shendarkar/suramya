@@ -22,7 +22,7 @@ function editOutfit() {
         console.log("Token:", token);
         if (!token) {
             alert("You are not logged in. Please log in to access this page.");
-            router.push("/admin-9970/login");
+            router.push("/admin/login");
         }
 
         const fetchOutfitById = async (id: string) => {
