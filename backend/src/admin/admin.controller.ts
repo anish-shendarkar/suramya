@@ -64,6 +64,7 @@ export class AdminController {
     );
 
     const coverImage = uploadedImages.length > 0 ? uploadedImages[0] : null;
+    console.log('create outfit hit', Date.now())
 
     return this.adminService.createOutfit(
       req.user.user,
