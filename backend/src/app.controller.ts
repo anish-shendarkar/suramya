@@ -1,7 +1,6 @@
 import { AuthService } from './auth/auth.service';
 import { Controller, Get, Post, UseGuards, Request, Param } from '@nestjs/common';
 import { AppService } from './app.service';
-import { AdminService } from './admin/admin.service';
 import { AuthGuard } from '@nestjs/passport';
 
 @Controller('api')
@@ -9,31 +8,11 @@ export class AppController {
   constructor(
     private readonly appService: AppService,
     private readonly authService: AuthService,
-    private readonly adminService: AdminService,
   ) {}
 
   @Get()
   getHello(): string {
     return this.appService.getHello();
-  }
-
-  @Post('/signup')
-  async signup(@Request() req) {
-    // required body
-    // {
-    //   "name": "user1",
-    //   "email": "user1@example.com",
-    //   "password": "user1"
-    // }
-
-    console.log('appsignup', req.body);
-    const user = await this.adminService.createUser(
-      req.body.name,
-      req.body.email,
-      req.body.password,
-      req.body.role,
-    );
-    return user;
   }
 
   @Post('/login')

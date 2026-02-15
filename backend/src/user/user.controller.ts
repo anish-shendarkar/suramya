@@ -2,20 +2,8 @@ import { Controller, Query } from '@nestjs/common';
 import { UserService } from './user.service';
 import {
   Get,
-  Post,
-  Body,
-  Patch,
-  Put,
   Param,
-  Delete,
-  UseGuards,
-  Request,
-  Req,
-  UseInterceptors,
-  UploadedFiles
 } from '@nestjs/common'
-import { AuthGuard } from '@nestjs/passport';
-import { RoleGuard } from 'src/role.guard';
 
 @Controller('user')
 export class UserController {
@@ -62,8 +50,13 @@ export class UserController {
   }
 
   @Get('alljewellery')
-  async getAllJewellery() {
-    return this.userService.getAllJewelleryItems();
+  async getAllJewellery(
+    @Query('page') page: string = '1',
+    @Query('limit') limit: string = '10'
+  ) {
+    const pageNum = parseInt(page, 10);
+    const limitNum = parseInt(limit, 10);
+    return this.userService.getAllJewelleryItems(pageNum, limitNum);
   }
 
   @Get('search/outfit')

@@ -8,6 +8,7 @@ import { Jewellery } from 'src/schemas/jewellery.schema';
 import { UpdateOutfitDto } from './dto/update-outfit.dto';
 import { v2 as cloudinary } from 'cloudinary';
 import { CreateOutfitDto } from './dto/create-outfit.dto';
+import { CreateJewelleryDto } from './dto/create-jewellery.dto';
 
 @Injectable()
 export class AdminService {
@@ -64,8 +65,20 @@ export class AdminService {
     if (!outfit) {
       throw new BadRequestException('Outfit not found');
     }
+    const allImages = [outfit.coverImage, ...outfit.images];
+    for (const imageUrl of allImages) {
+      const publicId = this.extractPublicId(imageUrl);
+      if (publicId) {
+        try {
+          await cloudinary.uploader.destroy(publicId);
+        } catch (error) {
+          console.error('Cloudinary delete error:', error);
+        }
+      }
+    }
 
-    await outfit.deleteOne();
+    await this.outfitModel.deleteOne({ _id: outfitId });
+    return { message: 'Outfit deleted successfully' };
   }
 
   async getAllOutfits() {
@@ -173,7 +186,7 @@ export class AdminService {
     return outfit;
   }
 
-  async createJewelleryItem(user: User, body, coverImage: string, images: string[]) {
+  async createJewelleryItem(user: User, body: CreateJewelleryDto, coverImage: string, images: string[]) {
     const jewelleryItem = new this.jewelleryModel({
       name: body.name.toLowerCase(),
       description: body.description.toLowerCase(),
@@ -198,14 +211,24 @@ export class AdminService {
     return jewelleryItems;
   }
 
-  async deleteJewelleryItem(user: User, jewelleryId: string) {
+  async deleteJewelleryItem(jewelleryId: string) {
     const jewelleryItem = await this.jewelleryModel.findById(jewelleryId);
     if (!jewelleryItem) {
       throw new BadRequestException('Jewellery item not found');
     }
+    const allImages = [jewelleryItem.coverImage, ...jewelleryItem.images];
+    for (const imageUrl of allImages) {
+      const publicId = this.extractPublicId(imageUrl);
+      if (publicId) {
+        try {
+          await cloudinary.uploader.destroy(publicId);
+        } catch (error) {
+          console.error('Cloudinary delete error:', error);
+        }
+      }
+    }
 
-    await jewelleryItem.deleteOne();
-
+    await this.jewelleryModel.deleteOne({ _id: jewelleryId });
     return { message: 'Jewellery item deleted successfully' };
   }
 }

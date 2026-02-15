@@ -184,7 +184,7 @@ export class AdminController {
   @Delete('deletejewelleryitem/:jewelleryId')
   async deleteJewelleryItem(@Param('jewelleryId') jewelleryId, @Request() req) {
     console.log('req.user', req.user);
-    return this.adminService.deleteJewelleryItem(req.user.user, jewelleryId);
+    return this.adminService.deleteJewelleryItem(jewelleryId);
   }
 
   @Get('getjewelleryitems')
