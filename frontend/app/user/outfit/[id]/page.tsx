@@ -65,7 +65,7 @@ export default function OutfitViewer() {
     if (!outfit) return <p className="text-center mt-10">Loading outfit details...</p>;
     // URL of images
     return (
-        <div className="container mx-auto px-4 py-6 mt-20">
+        <div className="container mx-auto px-4 py-6">
             <div className="grid lg:grid-cols-2 gap-8 items-start">
                 {/* Image Gallery */}
                 <div className="space-y-4">

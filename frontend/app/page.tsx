@@ -74,7 +74,7 @@ export default function Home() {
       <Navbar />
       <main className="flex-1">
         {/* Hero Section */}
-        <section className="relative w-full min-h-screen flex items-center py-8 sm:py-12 md:py-24 lg:py-32 xl:py-48">
+        <section className="relative w-full h-[80vh] sm:min-h-screen flex items-center py-8 sm:py-12 md:py-24 lg:py-32 xl:py-48">
 
           {/* Background Image */}
           <div className="absolute inset-0 -z-10">
@@ -83,6 +83,7 @@ export default function Home() {
               alt="Designer wear background"
               className="w-full h-full object-cover"
             />
+            <div className="absolute inset-0 bg-black/10" />
           </div>
 
           <div className="container px-4 md:px-6">
@@ -117,7 +118,6 @@ export default function Home() {
           </div>
 
         </section>
-
 
         {/* Categories Section */}
         <section className="w-full py-8 sm:py-12 md:py-24 lg:py-32">

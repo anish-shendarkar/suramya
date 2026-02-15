@@ -13,8 +13,8 @@ function Navbar() {
         <nav className="fixed w-full z-[50] backdrop-blur-md border-b border-white/10">
             <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-3 text-rose-600">
                 {/* Logo */}
-                <a href="/" className="flex items-center space-x-3 rtl:space-x-reverse">
-                    <img src="/suramya_logo.png" className="h-10" alt="Suramya Logo" />
+                <a href="/" className="flex items-center space-x-2 rtl:space-x-reverse">
+                    <img src="/suramya_logo_nobg.png" className="h-12" alt="Suramya Logo" />
                     <span className="self-center text-2xl font-extrabold whitespace-nowrap dark:text-white text-transparent bg-clip-text bg-gradient-to-r from-rose-600 to-purple-400 ">Suramya</span>
                 </a>
                 <button
