@@ -91,11 +91,58 @@ export class AdminController {
   }
 
   @Patch('editoutfit/:outfitId')
+  @UseInterceptors(FilesInterceptor('images', 10))
   async updateOutfit(
-    @Param('outfitId') outfitId,
-    @Body() body: Record<string, any>,
+    @Param('outfitId') id: string,
+    @Body() body,
+    @UploadedFiles() files: Array<Express.Multer.File>,
   ) {
-    return this.adminService.updateOutfit(outfitId, body);
+
+    // Upload new images if any
+    let uploadedImages: string[] = [];
+
+    if (files && files.length > 0) {
+      uploadedImages = await Promise.all(
+        files.map((file) => {
+          return new Promise<string>((resolve, reject) => {
+            cloudinary.uploader.upload_stream(
+              { folder: 'suramya/outfits' },
+              (err, result) => {
+                if (err) {
+                  reject(err);
+                } else if (result?.secure_url) {
+                  resolve(result.secure_url);
+                } else {
+                  reject(new Error('No secure_url returned'));
+                }
+              }
+            ).end(file.buffer);
+          });
+        })
+      );
+    }
+
+    // Parse imagesToDelete if sent from frontend
+    let imagesToDelete: string[] = [];
+    if (body.imagesToDelete) {
+      if (typeof body.imagesToDelete === 'string') {
+        try {
+          imagesToDelete = JSON.parse(body.imagesToDelete);
+        } catch {
+          // If not JSON, treat it as single URL
+          imagesToDelete = [body.imagesToDelete];
+        }
+      } else {
+        imagesToDelete = body.imagesToDelete;
+      }
+    }
+
+    return this.adminService.updateOutfit(
+      id,
+      body,
+      uploadedImages,
+      imagesToDelete,
+    );
   }
 
   @Post('createjewelleryitem')
