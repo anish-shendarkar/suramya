@@ -52,7 +52,7 @@ export default function ContactPage() {
               </div>
               <h3 className="font-medium mb-2">Call Us</h3>
               <a href="tel:+15551234567" className="text-primary hover:underline">
-                (555) 123-4567
+                +91 9637637459
               </a>
             </CardContent>
           </Card>

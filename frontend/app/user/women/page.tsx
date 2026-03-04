@@ -15,6 +15,13 @@ export default function CategoryPage() {
     const router = useRouter();
     const { category } = useParams();
     const [activeCategory, setActiveCategory] = useState<string | null>(null);
+    const searchParams = useSearchParams();
+    const urlCategory = searchParams.get("category");
+    
+    useEffect(() => {
+        setActiveCategory(urlCategory);
+        setCurrentPage(1); // Reset to first page when category changes
+    }, [urlCategory]);
 
     useEffect(() => {
         fetchOutfits(currentPage);
@@ -51,11 +58,22 @@ export default function CategoryPage() {
     const handleCategorySelect = (cat: string | null) => {
         setActiveCategory(cat);
         setSidebarOpen(false); // Close sidebar on mobile after selection
+
+        const params = new URLSearchParams(searchParams.toString());
+        if(cat) {
+            params.set("category", cat);
+        } else {
+            params.delete("category");
+        }
+        router.push(`?${params.toString()}`, { scroll: false });
     };
 
     const handlePageChange = (newPage: number) => {
         setCurrentPage(newPage);
         setActiveCategory(null); // Reset category filter when changing page
+        const params = new URLSearchParams(searchParams.toString());
+        params.delete("category");
+        router.push(`?${params.toString()}`, { scroll: false });
         window.scrollTo({ top: 0, behavior: "smooth" }); // Scroll to top on page change
     }
 

@@ -2,8 +2,8 @@
 
 export default function AboutPage() {
     return (
-        <div className="flex container mx-auto p-6 text-center justify-center items-center flex-col">
-            <h1 className="text-3xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-rose-300 from-40% to-purple-400 to-80%">About Us</h1>
+        <div className="flex container mx-auto p-6 flex-col">
+            <h1 className="text-3xl font-bold mb-6 ">| About Us</h1>
             <section className="text-lg w-[40%] text-justify text-slate-600">
                 <h2 className="text-xl font-semibold text-rose-400">Dress to Impress, Rent with Ease</h2>
 

@@ -117,3 +117,7 @@ body {
 .animate-gradient {
   animation: gradient 12s ease infinite;
 }
+
+html, body {
+  overflow-x: hidden;
+}

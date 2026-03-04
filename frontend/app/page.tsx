@@ -86,7 +86,7 @@ export default function Home() {
             <div className="absolute inset-0 bg-black/10" />
           </div>
 
-          <div className="container px-4 md:px-6">
+          <div className="w-full max-w-[1400px] mx-auto px-4 md:px-6">
             <div className="flex flex-col items-end text-right space-y-6 ml-auto">
 
               <div className="max-w-[600px]">
@@ -119,16 +119,19 @@ export default function Home() {
 
         </section>
 
-        {/* Categories Section */}
-        <section className="w-full py-8 sm:py-12 md:py-24 lg:py-32">
+        {/* Categories Section
+        <section className="w-full max-w-[1400px] mx-auto px-4 sm:py-12 md:py-24 lg:py-32">
           <div className="container px-4 md:px-6">
             <h2 className="text-2xl sm:text-3xl font-bold tracking-tighter text-center mb-8 sm:mb-12">Photo Gallery</h2>
+            <div>
+              <img src="/collage.png" alt="Photo Gallery" className="w-full h-auto rounded-lg shadow-lg" />
+            </div>
           </div>
-        </section>
+        </section> */}
 
         {/* How It Works Section */}
-        <section id="how-it-works" className="w-full py-8 sm:py-12 md:py-24 lg:py-32 bg-gray-50">
-          <div className="container px-4 md:px-6">
+        <section id="how-it-works" className="w-full py-10 sm:py-12 md:py-24 lg:py-32 bg-gray-50">
+          <div className="max-w-[1400px] mx-auto px-4 md:px-6">
             <h2 className="text-2xl sm:text-3xl font-bold tracking-tighter text-center mb-8 sm:mb-12">How It Works</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
               {steps.map((step) => (
@@ -145,7 +148,7 @@ export default function Home() {
         </section>
 
         {/* Popular Items Section */}
-        <section className="w-full py-8 sm:py-12 md:py-16 lg:py-20">
+        <section className="w-full max-w-[1400px] mx-auto px-4 sm:py-12 md:py-16 lg:py-8">
           <div className="container px-4 md:px-6">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-8 sm:mb-12 gap-4">
               <h2 className="text-2xl sm:text-3xl font-bold tracking-tighter">Popular This Week</h2>
@@ -163,7 +166,9 @@ export default function Home() {
 
             <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
               {popularItems.map((item, index) => (
-                <Card key={item._id || index} className="group">
+                <Card key={item._id || index}
+                  className="group rounded-lg shadow-md border-2 border-transparent transition-all duration-300 hover:border-rose-300 hover:shadow-lg hover:shadow-purple-400 cursor-pointer bg-white"
+                  onClick={() => router.push(`/user/outfit/${item._id}`)}>
                   <CardContent className="p-0">
                     <div className="relative aspect-[3/4] overflow-hidden rounded-t-lg">
                       <Image
@@ -178,7 +183,7 @@ export default function Home() {
                       <h3 className="font-semibold mb-1 text-sm sm:text-base line-clamp-1">{item.name || item.title}</h3>
                       <div className="flex justify-between items-center gap-2">
                         <p className="font-bold text-sm sm:text-base">₹{item.rentalPrice || item.price}/day</p>
-                        <Button size="sm" className="text-xs sm:text-sm" onClick={() => router.push(`/user/outfit/${item._id}`)}>
+                        <Button size="sm" className="text-xs sm:text-sm">
                           Rent
                         </Button>
                       </div>
@@ -191,7 +196,7 @@ export default function Home() {
         </section>
 
         {/* New Arrivals Section */}
-        <section id="new-arrivals" className="w-full py-8 sm:py-12 md:py-16 lg:py-20">
+        <section id="new-arrivals" className="w-full max-w-[1400px] mx-auto px-4 py-10 sm:py-12 md:py-16 lg:py-20">
           <div className="container px-4 md:px-6">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-8 sm:mb-12 gap-4">
               <h2 className="text-2xl sm:text-3xl font-bold tracking-tighter">New Arrivals</h2>
@@ -209,7 +214,9 @@ export default function Home() {
 
             <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
               {newArrivals.map((item, index) => (
-                <Card key={item._id || index} className="group">
+                <Card key={item._id || index}
+                  className="group rounded-lg shadow-md border-2 border-transparent transition-all duration-300 hover:border-rose-300 hover:shadow-lg hover:shadow-purple-400 cursor-pointer bg-white"
+                  onClick={() => router.push(`/user/outfit/${item._id}`)}>
                   <CardContent className="p-0">
                     <div className="relative aspect-[3/4] overflow-hidden rounded-t-lg">
                       <Image
@@ -224,7 +231,7 @@ export default function Home() {
                       <h3 className="font-semibold mb-1 text-sm sm:text-base line-clamp-1">{item.name || item.title}</h3>
                       <div className="flex justify-between items-center gap-2">
                         <p className="font-bold text-sm sm:text-base">₹{item.rentalPrice || item.price}/day</p>
-                        <Button size="sm" className="text-xs sm:text-sm" onClick={() => router.push(`/user/outfit/${item._id}`)}>
+                        <Button size="sm" className="text-xs sm:text-sm">
                           Rent
                         </Button>
                       </div>
@@ -237,8 +244,8 @@ export default function Home() {
         </section>
 
         {/* CTA Section */}
-        <section className="w-full py-8 sm:py-12 md:py-24 lg:py-32 bg-black text-white">
-          <div className="container px-4 md:px-6">
+        <section className="mx-6 motion-gradient bg-gradient-to-r from-rose-600 to-purple-400 py-8 sm:py-12 md:py-24 lg:py-24 text-white rounded-3xl">
+          <div className="w-full max-w-[1400px] mx-auto px-4 md:px-6">
             <div className="flex flex-col items-center space-y-4 text-center">
               <div className="space-y-2">
                 <h2 className="text-2xl sm:text-3xl font-bold tracking-tighter md:text-4xl lg:text-5xl px-4">
@@ -248,7 +255,9 @@ export default function Home() {
                   Join thousands of satisfied customers who trust us for their special occasions.
                 </p>
               </div>
-              <Button className="bg-white text-black hover:bg-gray-200 w-full sm:w-auto mx-4" size="lg">
+              <Button 
+              className="bg-white text-black hover:bg-gray-200 w-full sm:w-auto mx-4" size="lg"
+              onClick={() => {router.push('/user/women')}}>
                 Get Started Today
               </Button>
             </div>
@@ -275,7 +284,7 @@ export default function Home() {
                 </li>
                 <li>
                   <Link href="#" className="hover:underline">
-                    Jewelry
+                    Jewellery
                   </Link>
                 </li>
                 <li>
@@ -289,18 +298,8 @@ export default function Home() {
               <h4 className="font-semibold text-sm sm:text-base">Help</h4>
               <ul className="space-y-2 text-xs sm:text-sm">
                 <li>
-                  <Link href="#" className="hover:underline">
+                  <Link href="#how-it-works" className="hover:underline">
                     How It Works
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#" className="hover:underline">
-                    FAQs
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#" className="hover:underline">
-                    Shipping Info
                   </Link>
                 </li>
                 <li>
