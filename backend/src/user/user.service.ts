@@ -163,4 +163,14 @@ export class UserService {
         }
         return outfits;
     }
+
+    async fetchMenOutfitsType() {
+        const categories = await this.outfitModel.distinct('type', { gender: 'male' });
+        return categories;
+    }
+
+    async fetchWomenOutfitsType() {
+        const categories = await this.outfitModel.distinct('type', { gender: 'female' });
+        return categories;
+    }
 }

@@ -78,4 +78,14 @@ export class UserController {
   async getPopularOutfits() {
     return this.userService.getPopularOutfits();
   }
+
+  @Get('categories/male')
+  async getMenOutfitsType() {
+    return this.userService.fetchMenOutfitsType();
+  }
+
+  @Get('categories/female')
+  async getWomenOutfitsType() {
+    return this.userService.fetchWomenOutfitsType();
+  }
 }
